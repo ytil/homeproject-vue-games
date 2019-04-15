@@ -53,11 +53,3 @@ export default {
   name: "App"
 };
 </script>
-
-<style>
-  #app {
-    /*background-image: url("assets/4389.jpg");*/
-    /*background-size: cover;*/
-
-  }
-</style>
