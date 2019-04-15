@@ -23,15 +23,15 @@ export default new Vuex.Store({
 
   mutations: {
     updateWidth(state, payload) {
-      state.width = payload
+      state.width = payload;
     },
 
     updateHeight(state, payload) {
-      state.height = payload
+      state.height = payload;
     },
 
     updateWinningLine(state, payload) {
-      state.winningLine = payload
+      state.winningLine = payload;
     },
 
     resetToGameStartValues(state) {

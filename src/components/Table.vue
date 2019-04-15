@@ -12,31 +12,30 @@
       </div>
     </div>
   </v-container>
-
 </template>
 
 <script>
-  import TableCell from "./TableCell";
+import TableCell from "./TableCell";
 
-  export default {
-    computed: {
-      matrix() {
-        return this.$store.state.matrix;
-      }
-    },
-    components: {
-      "app-table-cell": TableCell
+export default {
+  computed: {
+    matrix() {
+      return this.$store.state.matrix;
     }
-  };
+  },
+  components: {
+    "app-table-cell": TableCell
+  }
+};
 </script>
 
 <style>
-  .table {
-    margin: 0 auto;
-  }
+.table {
+  margin: 0 auto;
+}
 
-  .row {
-    display: flex;
-    justify-content: center;
-  }
+.row {
+  display: flex;
+  justify-content: center;
+}
 </style>

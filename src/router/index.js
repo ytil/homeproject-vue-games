@@ -16,5 +16,5 @@ export default new VueRouter({
       component: Board
     }
   ],
-  mode: 'history'
+  mode: "history"
 });

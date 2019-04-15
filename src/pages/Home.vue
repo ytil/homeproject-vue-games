@@ -7,7 +7,7 @@
     <v-divider></v-divider>
 
     <v-layout justify-center mt-5>
-      <b>Использованы следующие технологии и библиотеки:</b>
+      <b class="text-xs-center">Использованы следующие технологии и библиотеки:</b>
     </v-layout>
 
     <v-layout justify-center mb-3>
@@ -19,7 +19,7 @@
 
     <v-layout justify-center mb-5>
       <p class="text-xs-center">
-        Исходный код алгоритма проверки выигрыша:
+        Алгоритм проверки выигрыша:
         <code>'src/utils/WinChecker.js'</code>
       </p>
     </v-layout>
@@ -31,7 +31,7 @@
     </v-layout>
 
     <v-layout justify-center mb-5>
-      <v-btn @click.native="newGame" to="/board" large color="primary"
+      <v-btn @click.native="newGame" to="/board" dark large color="indigo"
         >Играть</v-btn
       >
     </v-layout>

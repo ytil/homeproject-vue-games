@@ -14,8 +14,8 @@
 
     <v-container>
       <v-layout justify-center>
-        <v-btn @click="newGame">Сбросить ходы</v-btn>
-        <v-btn @click="showSettings">Изменить настройки</v-btn>
+        <v-btn @click="newGame" small>Сбросить ходы</v-btn>
+        <v-btn @click="showSettings" small>Изменить настройки</v-btn>
       </v-layout>
 
       <v-layout justify-center mt-5 mb-3>
@@ -59,12 +59,12 @@ export default {
     },
     showSettings() {
       this.$modal.show("game-settings");
-    },
+    }
   },
   watch: {
     gameOver(value) {
       if (value === true) {
-        this.$modal.show('game-results')
+        this.$modal.show("game-results");
       }
     }
   }

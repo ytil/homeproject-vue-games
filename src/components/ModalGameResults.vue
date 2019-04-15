@@ -1,5 +1,5 @@
 <template>
-  <modal name="game-results" width="400" height="auto" adaptive>
+  <modal name="game-results" width="300" height="auto">
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>
         Игра окончена
@@ -11,14 +11,14 @@
             <h1 class="text-xs-center">Победила дружба</h1>
           </v-layout>
 
-          <img src="../assets/handshake.png" alt="Рукопожатие"/>
+          <img src="../assets/handshake.png" alt="Рукопожатие" />
         </template>
 
         <template v-else>
           <v-layout mb-3 justify-center>
             <h1 class="text-xs-center">Победил игрок {{ currentPlayer }}</h1>
           </v-layout>
-          <img src="../assets/congrats.gif" alt="Радость победы"/>
+          <img src="../assets/congrats.gif" alt="Радость победы" />
         </template>
       </v-card-text>
 
@@ -26,7 +26,7 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" flat @click="restart">
+        <v-btn color="indigo" flat @click="restart">
           Еше разок
         </v-btn>
         <v-btn color="red" flat @click="cancel">
@@ -38,39 +38,39 @@
 </template>
 
 <script>
-  export default {
-    name: "ModalGameResults",
-    props: {
-      show: Boolean
+export default {
+  name: "ModalGameResults",
+  props: {
+    show: Boolean
+  },
+  data() {
+    return {
+      dialog: this.show
+    };
+  },
+  computed: {
+    currentPlayer() {
+      return this.$store.getters.currentPlayer;
     },
-    data() {
-      return {
-        dialog: this.show
-      };
-    },
-    computed: {
-      currentPlayer() {
-        return this.$store.getters.currentPlayer;
-      },
-      gameWinner() {
-        return this.$store.state.gameWinner;
-      }
-    },
-    methods: {
-      restart() {
-        this.$store.dispatch('newGame')
-        this.$modal.hide('game-results')
-      },
-      cancel() {
-        this.$modal.hide('game-results')
-      }
+    gameWinner() {
+      return this.$store.state.gameWinner;
     }
-  };
+  },
+  methods: {
+    restart() {
+      this.$store.dispatch("newGame");
+      this.$modal.hide("game-results");
+    },
+    cancel() {
+      this.$modal.hide("game-results");
+    }
+  }
+};
 </script>
 
 <style scoped>
-  img {
-    max-width: 100%;
-    /*max-height: 100%;*/
-  }
+img {
+  max-width: 100%;
+  /*max-height: 100%;*/
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <modal name="game-settings" width="400" height="auto">
+  <modal name="game-settings" height="auto" adaptive>
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>
         Настройки
@@ -13,7 +13,7 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn @click="apply" flat color="primary">
+        <v-btn @click="apply" flat color="indigo">
           Применить
         </v-btn>
       </v-card-actions>
@@ -31,9 +31,9 @@ export default {
   },
   methods: {
     apply() {
-      this.$store.dispatch('newGame')
-      this.$modal.hide('game-settings')
+      this.$store.dispatch("newGame");
+      this.$modal.hide("game-settings");
     }
-  },
+  }
 };
 </script>
