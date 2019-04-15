@@ -1,28 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <v-app>
+      <v-content>
+        <router-view></router-view>
+      </v-content>
+
+      <v-footer app color="primary" dark height="auto">
+        <div class="ma-auto">
+          &copy; Иванников Дмитрий, {{ new Date().getFullYear() }}
+
+          <v-layout d-inline ml-5>
+            <v-btn href="https://github.com/ytil" tag="a" target="_blank" icon small>
+              <v-icon>fab fa-github</v-icon>
+            </v-btn>
+
+            <v-btn href="https://t.me/ytil357" tag="a" target="_blank" icon small>
+              <v-icon>fab fa-telegram</v-icon>
+            </v-btn>
+
+            <v-btn href="mailto:ivannikov.web@gmail.com" tag="a" target="_blank" icon small>
+              <v-icon>fab fa-google</v-icon>
+            </v-btn>
+          </v-layout>
+        </div>
+      </v-footer>
+    </v-app>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+};
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
