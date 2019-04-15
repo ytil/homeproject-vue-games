@@ -40,14 +40,6 @@
 <script>
 export default {
   name: "ModalGameResults",
-  props: {
-    show: Boolean
-  },
-  data() {
-    return {
-      dialog: this.show
-    };
-  },
   computed: {
     currentPlayer() {
       return this.$store.getters.currentPlayer;
@@ -71,6 +63,5 @@ export default {
 <style scoped>
 img {
   max-width: 100%;
-  /*max-height: 100%;*/
 }
 </style>
