@@ -24,7 +24,7 @@ export default {
         return "";
       }
 
-      return this.cellContent === "X" ? "cell-x" : "cell-o";
+      return this.cellContent === "X" ? "clicked cell-x" : "clicked cell-o";
     }
   },
   methods: {
@@ -80,7 +80,7 @@ export default {
   background-color: white;
   color: lightgray;
 
-  &:hover {
+  &:not(.clicked):hover {
     background-color: lightgray;
   }
 }
@@ -93,18 +93,10 @@ export default {
 }
 
 .cell-x {
-  background: #3f51b5;
-
-  &:hover {
-    background-color: #3f51b5 !important;
-  }
+  background-color: #3f51b5;
 }
 
 .cell-o {
-  background: #ff9800;
-
-  &:hover {
-    background-color: #ff9800 !important;
-  }
+  background-color: #ff9800;
 }
 </style>
