@@ -13,9 +13,9 @@
     </v-toolbar>
 
     <v-container>
-      <v-layout justify-center>
-        <v-btn @click="newGame" small>Сбросить ходы</v-btn>
-        <v-btn @click="showSettings" small>Изменить настройки</v-btn>
+      <v-layout justify-center wrap>
+        <v-btn @click="newGame">Сбросить ходы</v-btn>
+        <v-btn @click="showSettings">Изменить настройки</v-btn>
       </v-layout>
 
       <v-layout justify-center mt-5 mb-3>
