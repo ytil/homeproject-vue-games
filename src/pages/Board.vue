@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     newGame() {
-      this.$store.dispatch("newGame");
+      this.$store.dispatch("NEW_GAME");
     },
     showSettings() {
       this.$modal.show("game-settings");

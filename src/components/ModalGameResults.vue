@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     restart() {
-      this.$store.dispatch("newGame");
+      this.$store.dispatch("NEW_GAME");
       this.$modal.hide("game-results");
     },
     cancel() {

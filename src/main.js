@@ -11,6 +11,12 @@ import "vuetify/dist/vuetify.min.css";
 import './element-ui-custom-theme/index.css'
 import "@fortawesome/fontawesome-free/css/brands.min.css";
 
+
+import { VTooltip, VPopover, VClosePopover } from 'v-tooltip'
+Vue.directive('tooltip', VTooltip)
+Vue.directive('close-popover', VClosePopover)
+Vue.component('v-popover', VPopover)
+
 Vue.use(Vuetify, {
   iconfont: "fa"
 });

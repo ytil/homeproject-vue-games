@@ -35,6 +35,10 @@
         >Играть</v-btn
       >
     </v-layout>
+
+    <v-layout>
+      <v-btn to="/balda" large>to balda</v-btn>
+    </v-layout>
   </v-container>
 </template>
 
@@ -48,7 +52,7 @@ export default {
   },
   methods: {
     newGame() {
-      this.$store.dispatch("newGame");
+      this.$store.dispatch("NEW_GAME");
     }
   }
 };

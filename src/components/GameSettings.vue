@@ -85,7 +85,7 @@ export default {
         return this.$store.state.width;
       },
       set(value) {
-        this.$store.commit("updateWidth", value);
+        this.$store.commit("UPDATE_WIDTH", value);
       }
     },
     height: {
@@ -93,7 +93,7 @@ export default {
         return this.$store.state.height;
       },
       set(value) {
-        this.$store.commit("updateHeight", value);
+        this.$store.commit("UPDATE_HEIGHT", value);
       }
     },
     winningLine: {
@@ -101,7 +101,7 @@ export default {
         return this.$store.state.winningLine;
       },
       set(value) {
-        this.$store.commit("updateWinningLine", value);
+        this.$store.commit("UPDATE_WINNING_LINE", value);
       }
     },
     maxWinningLineValue() {

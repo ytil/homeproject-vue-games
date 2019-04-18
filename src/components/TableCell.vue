@@ -34,13 +34,13 @@ export default {
         return;
       }
 
-      this.$store.commit("changeMatrixCell", {
+      this.$store.commit("CHANGE_MATRIX_CELL", {
         x: this.x,
         y: this.y,
         player: this.currentPlayer
       });
 
-      this.$store.commit("decreaseEmptyCells");
+      this.$store.commit("DECREASE_EMPTY_CELLS");
 
       this.checkWin();
     },
@@ -55,18 +55,18 @@ export default {
       ).calc();
 
       if (win) {
-        this.$store.commit("setWinner", this.currentPlayer);
+        this.$store.commit("SET_WINNER", this.currentPlayer);
       } else if (this.emptyCells === 0) {
-        this.$store.commit("setDraw");
+        this.$store.commit("SET_DRAW");
       } else {
-        this.$store.commit("changePlayer");
+        this.$store.commit("CHANGE_PLAYER");
       }
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .cell {
   display: flex;
   align-items: center;

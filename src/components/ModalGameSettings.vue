@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     apply() {
-      this.$store.dispatch("newGame");
+      this.$store.dispatch("NEW_GAME");
       this.$modal.hide("game-settings");
     }
   }
