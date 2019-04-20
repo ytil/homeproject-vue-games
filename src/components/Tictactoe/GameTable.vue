@@ -2,40 +2,39 @@
   <v-container>
     <div class="table">
       <div class="row" v-for="(row, rowIndex) in matrix" :key="rowIndex">
-        <app-table-cell
+        <app-cell
           v-for="(cell, cellIndex) in row"
           :key="cellIndex"
           :x="cellIndex"
           :y="rowIndex"
           :cellContent="cell"
-        ></app-table-cell>
+        ></app-cell>
       </div>
     </div>
   </v-container>
 </template>
 
 <script>
-import TableCell from "./TableCell";
+  import {mapState} from 'vuex'
+  import GameTableCell from "./GameTableCell";
 
-export default {
-  computed: {
-    matrix() {
-      return this.$store.state.matrix;
+  export default {
+    computed: {
+      ...mapState('tictactoe', ['matrix'])
+    },
+    components: {
+      "app-cell": GameTableCell
     }
-  },
-  components: {
-    "app-table-cell": TableCell
-  }
-};
+  };
 </script>
 
 <style scoped>
-.table {
-  margin: 0 auto;
-}
+  .table {
+    margin: 0 auto;
+  }
 
-.row {
-  display: flex;
-  justify-content: center;
-}
+  .row {
+    display: flex;
+    justify-content: center;
+  }
 </style>

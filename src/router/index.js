@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../pages/Home";
+import Tictactoe from '../pages/Tictactoe'
 import Board from "../pages/Board";
 import Balda from '../pages/Balda'
 
@@ -13,6 +14,10 @@ export default new VueRouter({
       component: Home
     },
     {
+      path: '/tictactoe',
+      component: Tictactoe
+    },
+    {
       path: "/board",
       component: Board
     },
@@ -21,5 +26,4 @@ export default new VueRouter({
       component: Balda
     }
   ],
-  // mode: "history"
 });

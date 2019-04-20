@@ -1,0 +1,243 @@
+<template>
+  <td @click="onCellClick">
+    {{ displayedLetter }}
+
+    <v-popover
+      :open="isPopoverOpen"
+      :disabled="isPopoverDisabled"
+      placement="bottom"
+      @show="isPopoverOpen = true"
+      @hide="selectedLetter = ''"
+    >
+      <template slot="popover">
+        <app-letter-picker
+          @apply="onApplyLetter"
+        ></app-letter-picker>
+      </template>
+    </v-popover>
+  </td>
+</template>
+
+<script>
+import { mapState, mapMutations } from "vuex";
+import LetterPicker from "./LetterPicker";
+
+export default {
+  name: "GameTableCell",
+  components: {
+    "app-letter-picker": LetterPicker
+  },
+
+  props: {
+    x: Number,
+    y: Number,
+    letter: String
+  },
+
+  data() {
+    return {
+      isPopoverOpen: false,
+      selectedLetter: ""
+    };
+  },
+
+  computed: {
+    ...mapState("balda", ["targetCell", "board"]),
+
+    displayedLetter() {
+      if (this.selectedLetter !== "") {
+        return this.targetCell.letter;
+      } else if (this.isTargetedCell) {
+        return this.selectedLetter;
+      } else {
+        return this.letter;
+      }
+    },
+
+    isTargetedCell() {
+      if (this.targetCell.x === this.x && this.targetCell.y === this.y) {
+        return true;
+      }
+
+      return false;
+    },
+
+    isPopoverDisabled() {
+      // popover is not active if click on the main line
+      // or the cell is not empty
+      // or the cell has no neighbors
+      if (this.y === 2) {
+        return true;
+      }
+
+      return false;
+    }
+  },
+
+  methods: {
+    ...mapMutations("balda", ["SET_TARGET_CELL"]),
+
+    onPickLetter(letter) {
+      this.selectedLetter = letter
+    },
+
+    onApplyLetter(letter) {
+      this.isPopoverOpen = false;
+      this.SET_TARGET_CELL({ x: this.x, y: this.y, letter });
+    },
+
+    onCellClick() {}
+  },
+
+  filters: {
+    uppercase(value) {
+      return value.toUpperCase();
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+td {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  font-size: 30px;
+  text-align: center;
+  border: 2px solid gray;
+  cursor: pointer;
+
+  &.target {
+    background-color: lightgrey;
+  }
+}
+</style>
+
+<style lang="scss">
+.v-popover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  &.open {
+    background-color: lightgrey !important;
+  }
+}
+
+.trigger {
+  width: 100%;
+  height: 100%;
+}
+
+.tooltip {
+  display: block !important;
+  z-index: 10000;
+
+  .tooltip-inner {
+    background: black;
+    color: white;
+    border-radius: 16px;
+    padding: 5px 10px 4px;
+  }
+
+  .tooltip-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+    margin: 5px;
+    border-color: black;
+    z-index: 1;
+  }
+
+  &[x-placement^="top"] {
+    margin-bottom: 5px;
+
+    .tooltip-arrow {
+      border-width: 5px 5px 0 5px;
+      border-left-color: transparent !important;
+      border-right-color: transparent !important;
+      border-bottom-color: transparent !important;
+      bottom: -5px;
+      left: calc(50% - 5px);
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  &[x-placement^="bottom"] {
+    margin-top: 5px;
+
+    .tooltip-arrow {
+      border-width: 0 5px 5px 5px;
+      border-left-color: transparent !important;
+      border-right-color: transparent !important;
+      border-top-color: transparent !important;
+      top: -5px;
+      left: calc(50% - 5px);
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  &[x-placement^="right"] {
+    margin-left: 5px;
+
+    .tooltip-arrow {
+      border-width: 5px 5px 5px 0;
+      border-left-color: transparent !important;
+      border-top-color: transparent !important;
+      border-bottom-color: transparent !important;
+      left: -5px;
+      top: calc(50% - 5px);
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  &[x-placement^="left"] {
+    margin-right: 5px;
+
+    .tooltip-arrow {
+      border-width: 5px 0 5px 5px;
+      border-top-color: transparent !important;
+      border-right-color: transparent !important;
+      border-bottom-color: transparent !important;
+      right: -5px;
+      top: calc(50% - 5px);
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  &.popover {
+    $color: #f9f9f9;
+
+    .popover-inner {
+      background: $color;
+      color: black;
+      /*padding: 24px;*/
+      border-radius: 5px;
+      box-shadow: 0 5px 30px rgba(black, 0.1);
+    }
+
+    .popover-arrow {
+      border-color: $color;
+    }
+  }
+
+  &[aria-hidden="true"] {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.15s, visibility 0.15s;
+  }
+
+  &[aria-hidden="false"] {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.15s;
+  }
+}
+</style>

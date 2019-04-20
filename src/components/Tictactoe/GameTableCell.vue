@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
-import WinChecker from "../utils/WinChecker";
+import { mapState, mapGetters, mapMutations } from "vuex";
+import TictactoeWinChecker from "../../utils/TictactoeWinChecker";
 
 export default {
   name: "VTableCell",
@@ -15,9 +15,15 @@ export default {
     y: Number,
     cellContent: String
   },
+
   computed: {
-    ...mapState(["matrix", "winningLine", "emptyCells", "gameOver"]),
-    ...mapGetters(["currentPlayer"]),
+    ...mapState("tictactoe", [
+      "matrix",
+      "winningLine",
+      "emptyCells",
+      "gameOver"
+    ]),
+    ...mapGetters("tictactoe", ["currentPlayer"]),
 
     clickedCellClassName() {
       if (this.cellContent === null) {
@@ -27,26 +33,35 @@ export default {
       return this.cellContent === "X" ? "clicked cell-x" : "clicked cell-o";
     }
   },
+
   methods: {
+    ...mapMutations("tictactoe", [
+      "CHANGE_MATRIX_CELL",
+      "DECREASE_EMPTY_CELLS",
+      "SET_WINNER",
+      "SET_DRAW",
+      "CHANGE_PLAYER"
+    ]),
+
     onCellClick() {
       //break if game is over or clicked cell is not empty
       if (this.gameOver || this.matrix[this.y][this.x] !== null) {
         return;
       }
 
-      this.$store.commit("CHANGE_MATRIX_CELL", {
+      this.CHANGE_MATRIX_CELL({
         x: this.x,
         y: this.y,
         player: this.currentPlayer
       });
 
-      this.$store.commit("DECREASE_EMPTY_CELLS");
+      this.DECREASE_EMPTY_CELLS();
 
       this.checkWin();
     },
 
     checkWin() {
-      const win = new WinChecker(
+      const win = new TictactoeWinChecker(
         this.x,
         this.y,
         this.currentPlayer,
@@ -55,11 +70,11 @@ export default {
       ).calc();
 
       if (win) {
-        this.$store.commit("SET_WINNER", this.currentPlayer);
+        this.SET_WINNER(this.currentPlayer);
       } else if (this.emptyCells === 0) {
-        this.$store.commit("SET_DRAW");
+        this.SET_DRAW();
       } else {
-        this.$store.commit("CHANGE_PLAYER");
+        this.CHANGE_PLAYER();
       }
     }
   }

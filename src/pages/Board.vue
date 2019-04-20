@@ -14,7 +14,7 @@
 
     <v-container>
       <v-layout justify-center wrap>
-        <v-btn @click="newGame">Сбросить ходы</v-btn>
+        <v-btn @click="NEW_GAME">Сбросить ходы</v-btn>
         <v-btn @click="showSettings">Изменить настройки</v-btn>
       </v-layout>
 
@@ -23,44 +23,42 @@
       </v-layout>
 
       <v-layout>
-        <app-table></app-table>
+        <app-game-table></app-game-table>
       </v-layout>
     </v-container>
 
-    <app-modal-game-results></app-modal-game-results>
-    <app-modal-game-settings></app-modal-game-settings>
+    <app-modal-results></app-modal-results>
+    <app-modal-settings></app-modal-settings>
   </div>
 </template>
 
 <script>
-import Table from "../components/Table";
-import ModalGameResults from "../components/ModalGameResults";
-import ModalGameSettings from "../components/ModalGameSettings";
+import GameTable from "../components/Tictactoe/GameTable";
+import ModalResults from "../components/Tictactoe/ModalResults";
+import ModalSettings from "../components/Tictactoe/ModalSettings";
+import {mapState, mapGetters, mapActions} from 'vuex'
 
 export default {
   name: "Board",
   components: {
-    "app-modal-game-settings": ModalGameSettings,
-    "app-modal-game-results": ModalGameResults,
-    "app-table": Table
+    "app-modal-settings": ModalSettings,
+    "app-modal-results": ModalResults,
+    "app-game-table": GameTable
   },
 
   computed: {
-    gameOver() {
-      return this.$store.state.gameOver;
-    },
-    currentPlayer() {
-      return this.$store.getters.currentPlayer;
-    }
+    ...mapState('tictactoe', ['gameOver']),
+    ...mapGetters('tictactoe', ['currentPlayer']),
   },
+
   methods: {
-    newGame() {
-      this.$store.dispatch("NEW_GAME");
-    },
+    ...mapActions('tictactoe', ['NEW_GAME']),
+
     showSettings() {
       this.$modal.show("game-settings");
     }
   },
+
   watch: {
     gameOver(value) {
       if (value === true) {

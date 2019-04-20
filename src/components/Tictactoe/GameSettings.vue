@@ -76,39 +76,53 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   name: "GameSettings",
 
   computed: {
     width: {
       get() {
-        return this.$store.state.width;
+        return this.$store.state.tictactoe.width
       },
       set(value) {
-        this.$store.commit("UPDATE_WIDTH", value);
+        this.UPDATE_WIDTH(value)
       }
     },
+
     height: {
       get() {
-        return this.$store.state.height;
+        return this.$store.state.tictactoe.height
       },
       set(value) {
-        this.$store.commit("UPDATE_HEIGHT", value);
+        this.UPDATE_HEIGHT(value)
       }
     },
+
     winningLine: {
       get() {
-        return this.$store.state.winningLine;
+        return this.$store.state.tictactoe.winningLine
       },
       set(value) {
-        this.$store.commit("UPDATE_WINNING_LINE", value);
+        this.UPDATE_WINNING_LINE(value)
       }
     },
+
     maxWinningLineValue() {
       const maxValue = this.width >= this.height ? this.width : this.height;
       return maxValue;
     }
+  },
+
+  methods: {
+    ...mapMutations("tictactoe", [
+      "UPDATE_WIDTH",
+      "UPDATE_HEIGHT",
+      "UPDATE_WINNING_LINE",
+    ]),
   }
+
 };
 </script>
 

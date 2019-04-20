@@ -11,14 +11,14 @@
             <h1 class="text-xs-center">Победила дружба</h1>
           </v-layout>
 
-          <img src="../assets/handshake.png" alt="Рукопожатие" />
+          <img src="../../assets/handshake.png" alt="Рукопожатие" />
         </template>
 
         <template v-else>
           <v-layout mb-3 justify-center>
             <h1 class="text-xs-center">Победил игрок {{ currentPlayer }}</h1>
           </v-layout>
-          <img src="../assets/congrats.gif" alt="Радость победы" />
+          <img src="../../assets/congrats.gif" alt="Радость победы" />
         </template>
       </v-card-text>
 
@@ -38,19 +38,18 @@
 </template>
 
 <script>
+  import {mapState, mapGetters, mapActions} from 'vuex'
 export default {
   name: "ModalGameResults",
   computed: {
-    currentPlayer() {
-      return this.$store.getters.currentPlayer;
-    },
-    gameWinner() {
-      return this.$store.state.gameWinner;
-    }
+    ...mapState('tictactoe', ['gameWinner']),
+    ...mapGetters('tictactoe', ['currentPlayer']),
   },
+
   methods: {
+    ...mapActions('tictactoe', ['NEW_GAME']),
     restart() {
-      this.$store.dispatch("NEW_GAME");
+      this.NEW_GAME()
       this.$modal.hide("game-results");
     },
     cancel() {

@@ -1,83 +1,53 @@
 <template>
-  <div>
+  <v-container>
+    <h1>Сыграй в балду</h1>
+
+    <p>правила:</p>
+
     <table>
       <tr v-for="(row, rowIndex) in board" :key="rowIndex">
-        <app-balda-table-cell v-for="(cell, cellIndex) in row" :key="cellIndex">
-          {{ cell | uppercase }}
-        </app-balda-table-cell>
+        <app-cell
+          v-for="(cell, cellIndex) in row"
+          :key="cellIndex"
+          :x="cellIndex"
+          :y="rowIndex"
+          :letter="cell"
+        ></app-cell>
       </tr>
     </table>
 
-    <v-btn @click="changeWord">Другое слово</v-btn>
-  </div>
+    <v-btn @click="CHANGE_WORD">Другое слово</v-btn>
+
+    <v-btn color="success">Сделать ход</v-btn>
+  </v-container>
 </template>
 
 <script>
-import BaldaTableCell from "../components/BaldaTableCell";
-
-function randomInteger(min, max) {
-  let randomNum = min + Math.random() * (max + 1 - min);
-  randomNum = Math.floor(randomNum);
-  return randomNum;
-}
+import { mapState, mapActions } from "vuex";
+import GameTableCell from "../components/Balda/GameTableCell";
 
 export default {
   name: "Balda",
   components: {
-    "app-balda-table-cell": BaldaTableCell
+    "app-cell": GameTableCell
   },
-  data() {
-    return {
-      board: [
-        [null, null, null, null, null],
-        [null, null, null, null, null],
-        [null, null, null, null, null],
-        [null, null, null, null, null],
-        [null, null, null, null, null]
-      ],
-      words: ["манка", "комок", "балда", "каток", "лимон"]
-    };
-  },
-  mounted() {
-    const word = this.getRandomWord();
-    this.fillMainLine(word);
-  },
-  methods: {
-    fillMainLine(word) {
-      const split = word.split("");
-      this.board.splice(2, 1, split);
-    },
-    getRandomWord() {
-      const randomIndex = randomInteger(0, this.words.length - 1);
-      const word = this.words[randomIndex];
-      this.removeItemFromCollection(randomIndex);
 
-      return word;
-    },
-    changeWord() {
-      if (this.words.length > 0) {
-        const word = this.getRandomWord();
-        this.fillMainLine(word);
-      }
-    },
-    removeItemFromCollection(index) {
-      this.words.splice(index, 1);
-    }
+  computed: {
+    ...mapState("balda", ["board"])
   },
-  filters: {
-    uppercase(value) {
-      if (value !== null) {
-        return value.toUpperCase();
-      }
-    }
+
+  mounted() {
+    this.CHANGE_WORD()
+  },
+
+  methods: {
+    ...mapActions('balda', ['CHANGE_WORD']),
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
 table {
   border-collapse: separate;
 }
-
 </style>

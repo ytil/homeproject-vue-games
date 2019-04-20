@@ -1,4 +1,4 @@
-export default class WinChecker {
+export default class TictactoeWinChecker {
   constructor(x, y, player, matrix, winningLine) {
     this.x = x;
     this.y = y;
