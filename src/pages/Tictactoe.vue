@@ -7,7 +7,9 @@
     <v-divider></v-divider>
 
     <v-layout justify-center mt-5>
-      <b class="text-xs-center">Использованы следующие технологии и библиотеки:</b>
+      <b class="text-xs-center"
+        >Использованы следующие технологии и библиотеки:</b
+      >
     </v-layout>
 
     <v-layout justify-center mb-3>
@@ -43,16 +45,16 @@
 </template>
 
 <script>
-  import {mapActions} from 'vuex'
-import GameSettings from "../components/Tictactoe/GameSettings";
+import { mapActions } from 'vuex'
+import GameSettings from '../components/Tictactoe/GameSettings'
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
-    "app-game-settings": GameSettings
+    'app-game-settings': GameSettings,
   },
   methods: {
-    ...mapActions('tictactoe', ['NEW_GAME'])
-  }
-};
+    ...mapActions('tictactoe', ['NEW_GAME']),
+  },
+}
 </script>

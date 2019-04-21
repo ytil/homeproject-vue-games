@@ -1,63 +1,68 @@
 <template>
-  <div class="cell" :class="clickedCellClassName" @click="onCellClick">
+  <div
+    class="cell"
+    :class="clickedCellClassName"
+    @click="onCellClick"
+    @mousedown.prevent
+  >
     {{ cellContent }}
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from "vuex";
-import TictactoeWinChecker from "../../utils/TictactoeWinChecker";
+import { mapState, mapGetters, mapMutations } from 'vuex'
+import TictactoeWinChecker from '../../utils/TictactoeWinChecker'
 
 export default {
-  name: "VTableCell",
+  name: 'VTableCell',
   props: {
     x: Number,
     y: Number,
-    cellContent: String
+    cellContent: String,
   },
 
   computed: {
-    ...mapState("tictactoe", [
-      "matrix",
-      "winningLine",
-      "emptyCells",
-      "gameOver"
+    ...mapState('tictactoe', [
+      'matrix',
+      'winningLine',
+      'emptyCells',
+      'gameOver',
     ]),
-    ...mapGetters("tictactoe", ["currentPlayer"]),
+    ...mapGetters('tictactoe', ['currentPlayer']),
 
     clickedCellClassName() {
       if (this.cellContent === null) {
-        return "";
+        return ''
       }
 
-      return this.cellContent === "X" ? "clicked cell-x" : "clicked cell-o";
-    }
+      return this.cellContent === 'X' ? 'clicked cell-x' : 'clicked cell-o'
+    },
   },
 
   methods: {
-    ...mapMutations("tictactoe", [
-      "CHANGE_MATRIX_CELL",
-      "DECREASE_EMPTY_CELLS",
-      "SET_WINNER",
-      "SET_DRAW",
-      "CHANGE_PLAYER"
+    ...mapMutations('tictactoe', [
+      'CHANGE_MATRIX_CELL',
+      'DECREASE_EMPTY_CELLS',
+      'SET_WINNER',
+      'SET_DRAW',
+      'CHANGE_PLAYER',
     ]),
 
     onCellClick() {
       //break if game is over or clicked cell is not empty
       if (this.gameOver || this.matrix[this.y][this.x] !== null) {
-        return;
+        return
       }
 
       this.CHANGE_MATRIX_CELL({
         x: this.x,
         y: this.y,
-        player: this.currentPlayer
-      });
+        player: this.currentPlayer,
+      })
 
-      this.DECREASE_EMPTY_CELLS();
+      this.DECREASE_EMPTY_CELLS()
 
-      this.checkWin();
+      this.checkWin()
     },
 
     checkWin() {
@@ -66,19 +71,19 @@ export default {
         this.y,
         this.currentPlayer,
         this.matrix,
-        this.winningLine
-      ).calc();
+        this.winningLine,
+      ).calc()
 
       if (win) {
-        this.SET_WINNER(this.currentPlayer);
+        this.SET_WINNER(this.currentPlayer)
       } else if (this.emptyCells === 0) {
-        this.SET_DRAW();
+        this.SET_DRAW()
       } else {
-        this.CHANGE_PLAYER();
+        this.CHANGE_PLAYER()
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -102,7 +107,7 @@ export default {
 
 /*trick for dynamically matching height to width*/
 .cell:after {
-  content: "";
+  content: '';
   display: block;
   padding-bottom: 100%;
 }

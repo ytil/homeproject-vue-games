@@ -33,17 +33,17 @@
 </template>
 
 <script>
-import GameTable from "../components/Tictactoe/GameTable";
-import ModalResults from "../components/Tictactoe/ModalResults";
-import ModalSettings from "../components/Tictactoe/ModalSettings";
-import {mapState, mapGetters, mapActions} from 'vuex'
+import GameTable from '../components/Tictactoe/GameTable'
+import ModalResults from '../components/Tictactoe/ModalResults'
+import ModalSettings from '../components/Tictactoe/ModalSettings'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: "Board",
+  name: 'Board',
   components: {
-    "app-modal-settings": ModalSettings,
-    "app-modal-results": ModalResults,
-    "app-game-table": GameTable
+    'app-modal-settings': ModalSettings,
+    'app-modal-results': ModalResults,
+    'app-game-table': GameTable,
   },
 
   computed: {
@@ -55,16 +55,16 @@ export default {
     ...mapActions('tictactoe', ['NEW_GAME']),
 
     showSettings() {
-      this.$modal.show("game-settings");
-    }
+      this.$modal.show('game-settings')
+    },
   },
 
   watch: {
     gameOver(value) {
       if (value === true) {
-        this.$modal.show("game-results");
+        this.$modal.show('game-results')
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>

@@ -1,17 +1,17 @@
 <template>
-  <td @click="onCellClick">
-    {{ displayedLetter }}
+  <td :class="{ target: isTargetCell }">
+    {{ displayedLetter | uppercase }}
 
     <v-popover
       :open="isPopoverOpen"
       :disabled="isPopoverDisabled"
       placement="bottom"
       @show="isPopoverOpen = true"
-      @hide="selectedLetter = ''"
     >
       <template slot="popover">
         <app-letter-picker
-          @apply="onApplyLetter"
+          @apply="applyLetter"
+          @cancel="isPopoverOpen = false"
         ></app-letter-picker>
       </template>
     </v-popover>
@@ -19,47 +19,40 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-import LetterPicker from "./LetterPicker";
+import { mapState, mapMutations } from 'vuex'
+import LetterPicker from './LetterPicker'
 
 export default {
-  name: "GameTableCell",
+  name: 'GameTableCell',
   components: {
-    "app-letter-picker": LetterPicker
+    'app-letter-picker': LetterPicker,
   },
 
   props: {
     x: Number,
     y: Number,
-    letter: String
+    letter: String,
   },
 
   data() {
     return {
       isPopoverOpen: false,
-      selectedLetter: ""
-    };
+    }
   },
 
   computed: {
-    ...mapState("balda", ["targetCell", "board"]),
+    ...mapState('balda', ['targetCell', 'board']),
 
     displayedLetter() {
-      if (this.selectedLetter !== "") {
-        return this.targetCell.letter;
-      } else if (this.isTargetedCell) {
-        return this.selectedLetter;
-      } else {
-        return this.letter;
-      }
+      return this.isTargetCell ? this.targetCell.letter : this.letter
     },
 
-    isTargetedCell() {
+    isTargetCell() {
       if (this.targetCell.x === this.x && this.targetCell.y === this.y) {
-        return true;
+        return true
       }
 
-      return false;
+      return false
     },
 
     isPopoverDisabled() {
@@ -67,34 +60,28 @@ export default {
       // or the cell is not empty
       // or the cell has no neighbors
       if (this.y === 2) {
-        return true;
+        return true
       }
 
-      return false;
-    }
+      return false
+    },
   },
 
   methods: {
-    ...mapMutations("balda", ["SET_TARGET_CELL"]),
+    ...mapMutations('balda', ['SET_TARGET_CELL']),
 
-    onPickLetter(letter) {
-      this.selectedLetter = letter
+    applyLetter(letter) {
+      this.isPopoverOpen = false
+      this.SET_TARGET_CELL({ x: this.x, y: this.y, letter })
     },
-
-    onApplyLetter(letter) {
-      this.isPopoverOpen = false;
-      this.SET_TARGET_CELL({ x: this.x, y: this.y, letter });
-    },
-
-    onCellClick() {}
   },
 
   filters: {
     uppercase(value) {
-      return value.toUpperCase();
-    }
-  }
-};
+      return value.toUpperCase()
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -120,10 +107,6 @@ td {
   left: 0;
   width: 100%;
   height: 100%;
-
-  &.open {
-    background-color: lightgrey !important;
-  }
 }
 
 .trigger {
@@ -152,7 +135,7 @@ td {
     z-index: 1;
   }
 
-  &[x-placement^="top"] {
+  &[x-placement^='top'] {
     margin-bottom: 5px;
 
     .tooltip-arrow {
@@ -167,7 +150,7 @@ td {
     }
   }
 
-  &[x-placement^="bottom"] {
+  &[x-placement^='bottom'] {
     margin-top: 5px;
 
     .tooltip-arrow {
@@ -182,7 +165,7 @@ td {
     }
   }
 
-  &[x-placement^="right"] {
+  &[x-placement^='right'] {
     margin-left: 5px;
 
     .tooltip-arrow {
@@ -197,7 +180,7 @@ td {
     }
   }
 
-  &[x-placement^="left"] {
+  &[x-placement^='left'] {
     margin-right: 5px;
 
     .tooltip-arrow {
@@ -228,13 +211,13 @@ td {
     }
   }
 
-  &[aria-hidden="true"] {
+  &[aria-hidden='true'] {
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.15s, visibility 0.15s;
   }
 
-  &[aria-hidden="false"] {
+  &[aria-hidden='false'] {
     visibility: visible;
     opacity: 1;
     transition: opacity 0.15s;

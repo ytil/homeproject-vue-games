@@ -3,7 +3,6 @@
     <v-layout>
       <v-text-field
         label="Введите букву"
-        flat
         v-model="inputValue"
         maxlength="1"
         :rules="[rules.rus]"
@@ -21,7 +20,7 @@
           :key="idx"
           :data-letter="letter"
           :class="{ active: letter === lowercaseInput }"
-          @click="onClick"
+          @click="handleClick"
         >
           {{ letter }}
         </li>
@@ -29,44 +28,51 @@
     </v-layout>
 
     <v-layout mt-2 mb-2>
-      <v-btn color="indigo" dark small @click="onApply">ОК</v-btn>
+      <v-btn color="indigo" flat small @click="applyLetter">ОК</v-btn>
+      <v-btn color="error" flat small @click="cancel">Отмена</v-btn>
     </v-layout>
   </div>
 </template>
 
 <script>
-import { alphabet } from "../../utils/alphabetRus";
+import { alphabet } from '../../utils/alphabetRus'
 
 export default {
-  name: "LetterPicker",
+  name: 'LetterPicker',
   data() {
     return {
-      inputValue: "",
+      inputValue: '',
       rules: {
         rus: value =>
-          alphabet.includes(value.toLowerCase()) || "Только русские буквы"
-      }
-    };
+          alphabet.includes(value.toLowerCase()) || 'Только русские буквы',
+      },
+    }
   },
   computed: {
     lowercaseInput() {
-      return this.inputValue.toLowerCase();
+      return this.inputValue.toLowerCase()
     },
 
     alphabet() {
-      return alphabet;
-    }
+      return alphabet
+    },
   },
   methods: {
-    onClick(event) {
-      this.inputValue = event.target.dataset.letter;
+    handleClick(event) {
+      this.inputValue = event.target.dataset.letter
     },
 
-    onApply() {
-      this.$emit("apply", this.lowercaseInput);
-    }
-  }
-};
+    applyLetter() {
+      if (this.inputValue !== '') {
+        this.$emit('apply', this.lowercaseInput)
+      }
+    },
+
+    cancel() {
+      this.$emit('cancel')
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>

@@ -15,26 +15,26 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex'
-  import GameTableCell from "./GameTableCell";
+import { mapState } from 'vuex'
+import GameTableCell from './GameTableCell'
 
-  export default {
-    computed: {
-      ...mapState('tictactoe', ['matrix'])
-    },
-    components: {
-      "app-cell": GameTableCell
-    }
-  };
+export default {
+  computed: {
+    ...mapState('tictactoe', ['matrix']),
+  },
+  components: {
+    'app-cell': GameTableCell,
+  },
+}
 </script>
 
 <style scoped>
-  .table {
-    margin: 0 auto;
-  }
+.table {
+  margin: 0 auto;
+}
 
-  .row {
-    display: flex;
-    justify-content: center;
-  }
+.row {
+  display: flex;
+  justify-content: center;
+}
 </style>

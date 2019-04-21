@@ -22,22 +22,22 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import GameSettings from "./GameSettings";
+import { mapActions } from 'vuex'
+import GameSettings from './GameSettings'
 
 export default {
-  name: "ModalGameSettings",
+  name: 'ModalGameSettings',
   components: {
-    "app-game-settings": GameSettings
+    'app-game-settings': GameSettings,
   },
 
   methods: {
-    ...mapActions("tictactoe", ["NEW_GAME"]),
+    ...mapActions('tictactoe', ['NEW_GAME']),
 
     apply() {
-      this.NEW_GAME();
-      this.$modal.hide("game-settings");
-    }
-  }
-};
+      this.NEW_GAME()
+      this.$modal.hide('game-settings')
+    },
+  },
+}
 </script>

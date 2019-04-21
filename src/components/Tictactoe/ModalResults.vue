@@ -38,9 +38,9 @@
 </template>
 
 <script>
-  import {mapState, mapGetters, mapActions} from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
-  name: "ModalGameResults",
+  name: 'ModalGameResults',
   computed: {
     ...mapState('tictactoe', ['gameWinner']),
     ...mapGetters('tictactoe', ['currentPlayer']),
@@ -50,13 +50,13 @@ export default {
     ...mapActions('tictactoe', ['NEW_GAME']),
     restart() {
       this.NEW_GAME()
-      this.$modal.hide("game-results");
+      this.$modal.hide('game-results')
     },
     cancel() {
-      this.$modal.hide("game-results");
-    }
-  }
-};
+      this.$modal.hide('game-results')
+    },
+  },
+}
 </script>
 
 <style scoped>
