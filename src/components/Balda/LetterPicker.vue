@@ -27,7 +27,7 @@
       </ul>
     </v-layout>
 
-    <v-layout mt-2 mb-2>
+    <v-layout mt-2 mb-1>
       <v-btn color="indigo" flat small @click="applyLetter">ОК</v-btn>
       <v-btn color="error" flat small @click="cancel">Отмена</v-btn>
     </v-layout>
@@ -83,10 +83,6 @@ export default {
   font-family: Roboto, sans-serif;
 }
 
-input {
-  text-transform: uppercase !important;
-}
-
 ul {
   display: flex;
   flex-wrap: wrap;
@@ -117,4 +113,10 @@ li {
     background-color: lightgrey;
   }
 }
+</style>
+
+<style>
+  .v-text-field__slot input {
+    text-transform: uppercase;
+  }
 </style>

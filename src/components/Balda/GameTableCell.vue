@@ -1,5 +1,5 @@
 <template>
-  <td :class="{ target: isTargetCell }">
+  <td :class="{ target: isTargetCell, select: selected }">
     {{ displayedLetter | uppercase }}
 
     <v-popover
@@ -32,6 +32,7 @@ export default {
     x: Number,
     y: Number,
     letter: String,
+    selected: Boolean,
   },
 
   data() {
@@ -96,6 +97,11 @@ td {
 
   &.target {
     background-color: lightgrey;
+  }
+
+  &.select {
+    background-color: orange;
+    color: white;
   }
 }
 </style>

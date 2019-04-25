@@ -4,12 +4,7 @@
 
     <p>правила:</p>
 
-    <table
-      @mousedown="startSelect"
-      @mouseup="dragStart = false"
-      @mouseover="trackCells"
-      ref="board"
-    >
+    <table>
       <tr v-for="(row, rowIndex) in board" :key="rowIndex">
         <app-cell
           v-for="(cell, cellIndex) in row"
@@ -17,13 +12,16 @@
           :x="cellIndex"
           :y="rowIndex"
           :letter="cell"
+          :selected="selectedCells.includes(`${rowIndex}${cellIndex}`)"
+          @click.native="selectCell(cellIndex, rowIndex)"
         ></app-cell>
       </tr>
     </table>
 
     <v-btn @click="CHANGE_WORD">Другое слово</v-btn>
-
     <v-btn color="success">Сделать ход</v-btn>
+
+    <h1>Текущее слово {{ selectedWord }}</h1>
   </v-container>
 </template>
 
@@ -40,16 +38,23 @@ export default {
   data() {
     return {
       dragStart: false,
-      wordCandidate: [],
-      lastSelectedCell: {
-        x: null,
-        y: null,
-      },
+      selectedCells: [], // format like ['00', '45', '33'] first letter is rowIndex, second is cellIndex
     }
   },
 
   computed: {
     ...mapState('balda', ['board', 'targetCell']),
+
+    selectedWord() {
+      const letters = this.selectedCells.map(cell => {
+        const x = cell[1]
+        const y = cell[0]
+
+        return this.board[y][x]
+      })
+
+      return letters.join('')
+    },
   },
 
   mounted() {
@@ -59,52 +64,53 @@ export default {
   methods: {
     ...mapActions('balda', ['CHANGE_WORD']),
 
-    startSelect(e) {
-      const table = this.$refs.board
-      let target = e.target
+    selectCell(cellIndex, rowIndex) {
+      console.log('1')
+      if (!this.isAllowedToSelect(cellIndex, rowIndex)) return
 
-      while (target !== table) {
-        if (target.tagName === 'TD') {
-          break
-        }
+      console.log('select cell')
 
-        target = target.parentNode
+      const last = this.getLastSelectedCell()
+      const current = { cellIndex, rowIndex }
+
+      if (this.isNeighbours(last, current)) {
+        console.log('select cell2')
+        this.selectedCells.push(`${rowIndex}${cellIndex}`)
       }
-      if (target === table) return
-
-      const x = target.cellIndex
-      const y = target.parentNode.rowIndex
-      this.lastSelectedCell = {x, y}
-      this.dragStart = true
     },
 
-    trackCells(e) {
-      if (this.targetCell.status === 'none' || this.dragStart === false) return
-
-      const table = this.$refs.board
-      let target = e.target
-
-      while (target !== table) {
-        if (target.tagName === 'TD') {
-          break
-        }
-
-        target = target.parentNode
-      }
-      if (target === table) return
-
-      const x = target.cellIndex
-      const y = target.parentNode.rowIndex
-
-      if (x === this.lastSelectedCell.x && y === this.lastSelectedCell.y) {
-        return
+    isAllowedToSelect(cellIndex, rowIndex) {
+      if (this.board[rowIndex][cellIndex] === '') {
+        return false
       }
 
-      this.lastSelectedCell.x = x
-      this.lastSelectedCell.y = y
+      return true
+    },
 
-      const selectedLetter = this.board[y][x]
-      this.wordCandidate.push(selectedLetter)
+    getLastSelectedCell() {
+      if (this.selectedCells.length === 0) {
+        return false
+      }
+      const lastSelectedCell = this.selectedCells[this.selectedCells.length - 1]
+      const cellIndex = lastSelectedCell[1]
+      const rowIndex = lastSelectedCell[0]
+
+      return {
+        cellIndex,
+        rowIndex,
+      }
+    },
+
+    isNeighbours(firstCell, secondCell) {
+      //checks if the cells are neighbors of horizontal or vertical
+
+      if (firstCell.cellIndex === secondCell.cellIndex) {
+        return Math.abs(firstCell.rowIndex - secondCell.rowIndex) === 1
+      } else if (firstCell.rowIndex === secondCell.rowIndex) {
+        return firstCell.cellIndex === secondCell.cellIndex
+      } else {
+        return false
+      }
     },
   },
 }
