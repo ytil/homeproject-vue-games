@@ -1,5 +1,6 @@
 <template>
   <v-container>
+
     <v-layout justify-center>
       <h1>Крестики-нолики</h1>
     </v-layout>
@@ -8,7 +9,7 @@
 
     <v-layout justify-center mt-5>
       <b class="text-xs-center"
-        >Использованы следующие технологии и библиотеки:</b
+      >Использованы следующие технологии и библиотеки:</b
       >
     </v-layout>
 
@@ -34,13 +35,15 @@
 
     <v-layout justify-center mb-5>
       <v-btn @click.native="NEW_GAME" to="/board" dark large color="indigo"
-        >Играть</v-btn
+      >Играть</v-btn
       >
     </v-layout>
 
     <v-layout>
       <v-btn to="/balda" large>to balda</v-btn>
     </v-layout>
+
+
   </v-container>
 </template>
 

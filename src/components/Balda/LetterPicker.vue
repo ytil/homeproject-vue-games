@@ -27,9 +27,9 @@
       </ul>
     </v-layout>
 
-    <v-layout mt-2 mb-1>
-      <v-btn color="indigo" flat small @click="applyLetter">ОК</v-btn>
+    <v-layout mt-2 column>
       <v-btn color="error" flat small @click="cancel">Отмена</v-btn>
+      <v-btn color="indigo" flat small @click="apply">ОК</v-btn>
     </v-layout>
   </div>
 </template>
@@ -62,7 +62,7 @@ export default {
       this.inputValue = event.target.dataset.letter
     },
 
-    applyLetter() {
+    apply() {
       if (this.inputValue !== '') {
         this.$emit('apply', this.lowercaseInput)
       }
@@ -91,32 +91,32 @@ ul {
   margin: 0;
   padding: 0;
   list-style: none;
-}
 
-li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  margin: 3px;
-  border: 1px solid gray;
-  border-radius: 5px;
-  text-transform: uppercase;
-  cursor: pointer;
+  li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
 
-  &:hover {
-    background-color: lightgrey;
-  }
+    &:hover {
+      background-color: lightgrey;
+    }
 
-  &.active {
-    background-color: lightgrey;
+    &.active {
+      background-color: lightgrey;
+    }
   }
 }
 </style>
 
 <style>
-  .v-text-field__slot input {
-    text-transform: uppercase;
-  }
+.v-text-field__slot input {
+  text-transform: uppercase;
+}
 </style>

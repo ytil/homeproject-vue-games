@@ -8,7 +8,6 @@ export default {
     nextMoveX: true,
     matrix: [],
     emptyCells: 0,
-    gameOver: false,
     gameWinner: false,
   },
 
@@ -16,6 +15,10 @@ export default {
     currentPlayer(state) {
       return state.nextMoveX ? 'X' : 'O'
     },
+
+    gameOver(state) {
+      return state.gameWinner !== false
+    }
   },
 
   mutations: {
@@ -34,7 +37,6 @@ export default {
     RESET_TO_GAME_START_VALUES(state) {
       state.nextMoveX = true
       state.emptyCells = state.width * state.height
-      state.gameOver = false
       state.gameWinner = false
     },
 
@@ -52,12 +54,10 @@ export default {
     },
 
     SET_WINNER(state, player) {
-      state.gameOver = true
       state.gameWinner = player
     },
 
     SET_DRAW(state) {
-      state.gameOver = true
       state.gameWinner = 'draw'
     },
 

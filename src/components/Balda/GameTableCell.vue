@@ -1,17 +1,20 @@
 <template>
-  <td :class="{ target: isTargetCell, select: selected }">
-    {{ displayedLetter | uppercase }}
+  <td
+    v-on="$listeners"
+    :class="{ available: available, target: target, selected: selected }"
+  >
+    {{ displayedLetter.toUpperCase() }}
 
     <v-popover
       :open="isPopoverOpen"
       :disabled="isPopoverDisabled"
-      placement="bottom"
-      @show="isPopoverOpen = true"
+      @show="showPopover"
     >
       <template slot="popover">
         <app-letter-picker
           @apply="applyLetter"
           @cancel="isPopoverOpen = false"
+          :key="rerenderLetterPickerKey"
         ></app-letter-picker>
       </template>
     </v-popover>
@@ -32,54 +35,42 @@ export default {
     x: Number,
     y: Number,
     letter: String,
+    available: Boolean,
+    target: Boolean,
     selected: Boolean,
   },
 
   data() {
     return {
       isPopoverOpen: false,
+      rerenderLetterPickerKey: 1,
     }
   },
 
   computed: {
-    ...mapState('balda', ['targetCell', 'board']),
+    ...mapState('balda', ['targetCell']),
 
     displayedLetter() {
-      return this.isTargetCell ? this.targetCell.letter : this.letter
-    },
-
-    isTargetCell() {
-      if (this.targetCell.x === this.x && this.targetCell.y === this.y) {
-        return true
-      }
-
-      return false
+      return this.target ? this.targetCell.letter : this.letter
     },
 
     isPopoverDisabled() {
-      // popover is not active if click on the main line
-      // or the cell is not empty
-      // or the cell has no neighbors
-      if (this.y === 2) {
-        return true
-      }
-
-      return false
+      return !this.available || this.targetCell.letter !== null
     },
   },
 
   methods: {
     ...mapMutations('balda', ['SET_TARGET_CELL']),
 
+    showPopover() {
+      this.isPopoverOpen = true
+      this.rerenderLetterPickerKey = this.rerenderLetterPickerKey + 1
+    },
+
     applyLetter(letter) {
       this.isPopoverOpen = false
-      this.SET_TARGET_CELL({ x: this.x, y: this.y, letter })
-    },
-  },
-
-  filters: {
-    uppercase(value) {
-      return value.toUpperCase()
+      const payload = { x: this.x, y: this.y, letter }
+      this.SET_TARGET_CELL(payload)
     },
   },
 }
@@ -95,12 +86,16 @@ td {
   border: 2px solid gray;
   cursor: pointer;
 
+  &.available {
+    background-color: lightblue;
+  }
+
   &.target {
     background-color: lightgrey;
   }
 
-  &.select {
-    background-color: orange;
+  &.selected {
+    background-color: goldenrod;
     color: white;
   }
 }

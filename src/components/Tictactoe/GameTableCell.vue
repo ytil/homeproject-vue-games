@@ -26,9 +26,8 @@ export default {
       'matrix',
       'winningLine',
       'emptyCells',
-      'gameOver',
     ]),
-    ...mapGetters('tictactoe', ['currentPlayer']),
+    ...mapGetters('tictactoe', ['currentPlayer', 'gameOver',]),
 
     clickedCellClassName() {
       if (this.cellContent === null) {
