@@ -53,3 +53,14 @@ export default {
   name: 'App',
 }
 </script>
+
+<style>
+  body {
+    font-family: Roboto, sans-serif;
+  }
+
+  .toast-wrapper {
+    width: 550px !important;
+    max-width: 90vw !important;
+  }
+</style>

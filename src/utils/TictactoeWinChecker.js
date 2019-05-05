@@ -24,7 +24,7 @@ export default class TictactoeWinChecker {
       result.push(cell)
     }
 
-    return result.reverse()
+    return result
   }
 
   getBottomSubstring(x, y, s) {
@@ -58,7 +58,7 @@ export default class TictactoeWinChecker {
       result.push(cell)
     }
 
-    return result.reverse()
+    return result
   }
 
   getRightSubstring(x, y, s) {
@@ -93,7 +93,7 @@ export default class TictactoeWinChecker {
       result.push(cell)
     }
 
-    return result.reverse()
+    return result
   }
 
   getTopRightSubstring(x, y, s) {
@@ -111,13 +111,13 @@ export default class TictactoeWinChecker {
       result.push(cell)
     }
 
-    return result.reverse()
+    return result
   }
 
   getBottomLeftSubstring(x, y, s) {
     const result = []
 
-    while (x > 0 && y > this.MAX_Y_AXIS_VALUE && s > 0) {
+    while (x > 0 && y < this.MAX_Y_AXIS_VALUE && s > 0) {
       x = x - 1
       y = y + 1
       s = s - 1
@@ -176,9 +176,9 @@ export default class TictactoeWinChecker {
 
   getSecondDiagonal() {
     return [
-      ...this.getTopRightSubstring(this.x, this.y, this.s),
-      this.player,
       ...this.getBottomLeftSubstring(this.x, this.y, this.s),
+      this.player,
+      ...this.getTopRightSubstring(this.x, this.y, this.s),
     ].join('')
   }
 

@@ -22,22 +22,28 @@ export default {
   },
 
   mutations: {
-    UPDATE_WIDTH(state, width) {
+    UPDATE_WIDTH_VALUE(state, width) {
       state.width = width
     },
 
-    UPDATE_HEIGHT(state, height) {
+    UPDATE_HEIGHT_VALUE(state, height) {
       state.height = height
     },
 
-    UPDATE_WINNING_LINE(state, line) {
+    UPDATE_WINNING_LINE_VALUE(state, line) {
       state.winningLine = line
     },
 
-    RESET_TO_GAME_START_VALUES(state) {
+    RESET_ACTIVE_PLAYER(state) {
       state.nextMoveX = true
+    },
+
+    RESET_EMPTY_CELLS(state) {
       state.emptyCells = state.width * state.height
-      state.gameWinner = false
+    },
+
+    RESET_GAME_WINNER(state) {
+      state.gameWinner = null
     },
 
     SET_MATRIX(state, matrix) {
@@ -53,12 +59,8 @@ export default {
       state.emptyCells = state.emptyCells - 1
     },
 
-    SET_WINNER(state, player) {
-      state.gameWinner = player
-    },
-
-    SET_DRAW(state) {
-      state.gameWinner = 'draw'
+    SET_WINNER(state, winner) {
+      state.gameWinner = winner
     },
 
     CHANGE_PLAYER(state) {
@@ -67,15 +69,21 @@ export default {
   },
 
   actions: {
-    NEW_GAME({ state, commit }) {
+    INIT_NEW_GAME({ state, commit, dispatch }) {
       const { width, height } = state
 
       const matrix = Array(height)
         .fill(null)
         .map(() => Array(width).fill(null))
 
-      commit('RESET_TO_GAME_START_VALUES')
+      dispatch('RESET_TO_INITIAL')
       commit('SET_MATRIX', matrix)
     },
+
+    RESET_TO_INITIAL({commit}) {
+      commit('RESET_ACTIVE_PLAYER')
+      commit('RESET_EMPTY_CELLS')
+      commit('RESET_GAME_WINNER')
+    }
   },
 }

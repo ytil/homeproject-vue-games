@@ -1,5 +1,5 @@
 <template>
-  <modal name="game-settings" height="auto" adaptive>
+  <modal name="tictactoe-game-settings" height="auto" adaptive>
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>
         Настройки
@@ -32,11 +32,11 @@ export default {
   },
 
   methods: {
-    ...mapActions('tictactoe', ['NEW_GAME']),
+    ...mapActions('tictactoe', ['INIT_NEW_GAME']),
 
     apply() {
-      this.NEW_GAME()
-      this.$modal.hide('game-settings')
+      this.INIT_NEW_GAME()
+      this.$modal.hide('tictactoe-game-settings')
     },
   },
 }

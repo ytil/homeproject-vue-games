@@ -1,12 +1,12 @@
 <template>
-  <modal name="game-results" width="300" height="auto">
+  <modal name="tictactoe-game-results" width="300" height="auto">
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>
         Игра окончена
       </v-card-title>
 
       <v-card-text>
-        <template v-if="gameWinner === 'draw'">
+        <template v-if="gameWinner === 'none'">
           <v-layout mb-3 justify-center>
             <h1 class="text-xs-center">Победила дружба</h1>
           </v-layout>
@@ -47,13 +47,13 @@ export default {
   },
 
   methods: {
-    ...mapActions('tictactoe', ['NEW_GAME']),
+    ...mapActions('tictactoe', ['INIT_NEW_GAME']),
     restart() {
-      this.NEW_GAME()
-      this.$modal.hide('game-results')
+      this.INIT_NEW_GAME()
+      this.$modal.hide('tictactoe-game-results')
     },
     cancel() {
-      this.$modal.hide('game-results')
+      this.$modal.hide('tictactoe-game-results')
     },
   },
 }

@@ -9,27 +9,25 @@ export default {
       ['', '', '', '', ''],
       ['', '', '', '', ''],
     ],
-
-    scores: {
+    score: {
+      usedWords: [],
       player1: {
         total: 0,
-        usedWords: [],
+        words: [],
       },
       player2: {
         total: 0,
-        usedWords: [],
+        words: [],
       },
     },
-
     nextMovePlayer1: true,
-
     emptyCells: 20,
-
     targetCell: {
       x: null,
       y: null,
       letter: null,
     },
+    gameWinner: null,
   },
 
   getters: {
@@ -37,13 +35,13 @@ export default {
       return state.nextMovePlayer1 ? 'player1' : 'player2'
     },
 
-    gameOver(state) {
-      return state.emptyCells === 0
-    },
-
     mainLineWord(state) {
       const mainLine = state.board[2].slice()
       return mainLine.join('')
+    },
+
+    gameOver(state) {
+      return state.emptyCells === 0
     },
   },
 
@@ -88,23 +86,25 @@ export default {
       state.board.splice(2, 1, splitWord)
     },
 
-    SET_SCORES(state, payload) {
+    UPDATE_SCORE(state, payload) {
       const { word, player } = payload
       const wordLength = word.length
 
-      state.scores[player].usedWords.push(word)
-      state.scores[player].total += wordLength
+      state.score[player].words.push(word)
+      state.score[player].total += wordLength
+      state.score.usedWords.push(word)
     },
 
-    RESET_SCORES(state) {
-      state.scores = {
+    RESET_SCORE(state) {
+      state.score = {
+        usedWords: [],
         player1: {
           total: 0,
-          usedWords: [],
+          words: [],
         },
         player2: {
           total: 0,
-          usedWords: [],
+          words: [],
         },
       }
     },
@@ -118,10 +118,18 @@ export default {
         ['', '', '', '', ''],
       ]
     },
+
+    SET_GAME_WINNER(state, winner) {
+      state.gameWinner = winner
+    },
+
+    RESET_GAME_WINNER(state) {
+      state.gameWinner = null
+    },
   },
 
   actions: {
-    INIT_GAME({ commit, dispatch }, word) {
+    INIT_NEW_GAME({ commit, dispatch }, word) {
       dispatch('RESET_TO_INITIAL')
       commit('FILL_MAIN_LINE', word)
     },
@@ -130,7 +138,8 @@ export default {
       const { x, y, letter } = state.targetCell
       const { currentPlayer } = getters
 
-      commit('SET_SCORES', { word: word, player: currentPlayer })
+      commit('DECREASE_EMPTY_CELLS')
+      commit('UPDATE_SCORE', { word: word, player: currentPlayer })
       commit('ADD_LETTER_TO_MATRIX', { x, y, letter })
       commit('RESET_TARGET_CELL')
       commit('CHANGE_ACTIVE_PLAYER')
@@ -140,7 +149,8 @@ export default {
       commit('RESET_GAME_BOARD')
       commit('RESET_TARGET_CELL')
       commit('RESET_EMPTY_CELLS')
-      commit('RESET_SCORES')
+      commit('RESET_SCORE')
+      commit('RESET_GAME_WINNER')
       commit('CHANGE_ACTIVE_PLAYER', 'player1')
     },
   },

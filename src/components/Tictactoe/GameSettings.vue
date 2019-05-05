@@ -8,14 +8,14 @@
       <v-flex xs9>
         <v-layout>
           <v-flex hidden-xs-only mr-5>
-            <el-slider v-model.number="width" :min="3" :max="9"></el-slider>
+            <el-slider v-model.number="width" :min="3" :max="5"></el-slider>
           </v-flex>
 
           <v-flex ml-auto shrink>
             <el-input-number
               v-model.number="width"
               :min="3"
-              :max="9"
+              :max="5"
               size="small"
             ></el-input-number>
           </v-flex>
@@ -31,14 +31,14 @@
       <v-flex xs9>
         <v-layout>
           <v-flex hidden-xs-only mr-5>
-            <el-slider v-model.number="height" :min="3" :max="9"></el-slider>
+            <el-slider v-model.number="height" :min="3" :max="5"></el-slider>
           </v-flex>
 
           <v-flex ml-auto shrink>
             <el-input-number
               v-model.number="height"
               :min="3"
-              :max="9"
+              :max="5"
               size="small"
             ></el-input-number>
           </v-flex>
@@ -87,7 +87,7 @@ export default {
         return this.$store.state.tictactoe.width
       },
       set(value) {
-        this.UPDATE_WIDTH(value)
+        this.UPDATE_WIDTH_VALUE(value)
       },
     },
 
@@ -96,7 +96,7 @@ export default {
         return this.$store.state.tictactoe.height
       },
       set(value) {
-        this.UPDATE_HEIGHT(value)
+        this.UPDATE_HEIGHT_VALUE(value)
       },
     },
 
@@ -105,7 +105,7 @@ export default {
         return this.$store.state.tictactoe.winningLine
       },
       set(value) {
-        this.UPDATE_WINNING_LINE(value)
+        this.UPDATE_WINNING_LINE_VALUE(value)
       },
     },
 
@@ -117,9 +117,9 @@ export default {
 
   methods: {
     ...mapMutations('tictactoe', [
-      'UPDATE_WIDTH',
-      'UPDATE_HEIGHT',
-      'UPDATE_WINNING_LINE',
+      'UPDATE_WIDTH_VALUE',
+      'UPDATE_HEIGHT_VALUE',
+      'UPDATE_WINNING_LINE_VALUE',
     ]),
   },
 }

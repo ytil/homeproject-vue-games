@@ -18,7 +18,7 @@ export default new VueRouter({
       component: Tictactoe,
     },
     {
-      path: '/board',
+      path: '/tictactoe/board',
       component: Board,
     },
     {

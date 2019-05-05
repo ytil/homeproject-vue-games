@@ -20,13 +20,6 @@
       <v-chip>Vuetify</v-chip>
     </v-layout>
 
-    <v-layout justify-center mb-5>
-      <p class="text-xs-center">
-        Алгоритм проверки выигрыша:
-        <code>'src/utils/TictactoeWinChecker.jshecker.js'</code>
-      </p>
-    </v-layout>
-
     <v-layout mb-3>
       <v-flex>
         <app-game-settings></app-game-settings>
@@ -34,7 +27,7 @@
     </v-layout>
 
     <v-layout justify-center mb-5>
-      <v-btn @click.native="NEW_GAME" to="/board" dark large color="indigo"
+      <v-btn @click.native="INIT_NEW_GAME" to="/board" dark large color="indigo"
       >Играть</v-btn
       >
     </v-layout>
@@ -57,7 +50,7 @@ export default {
     'app-game-settings': GameSettings,
   },
   methods: {
-    ...mapActions('tictactoe', ['NEW_GAME']),
+    ...mapActions('tictactoe', ['INIT_NEW_GAME']),
   },
 }
 </script>
