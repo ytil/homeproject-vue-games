@@ -65,7 +65,7 @@
         </v-flex>
 
         <v-flex xs12 sm4>
-          <v-btn block color="success" @click="makeMove">Сделать ход </v-btn>
+          <v-btn block color="success" :disabled="!gameOver" @click="makeMove">Сделать ход </v-btn>
         </v-flex>
       </v-layout>
     </v-layout>
@@ -177,7 +177,7 @@ export default {
 
         this.selectCell(cellIndex, rowIndex)
       }
-    }, 50),
+    }, 25),
 
     onDragSelect(cellIndex, rowIndex) {
       if (this.dragStart === true) {
