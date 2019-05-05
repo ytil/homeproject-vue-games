@@ -245,6 +245,7 @@ export default {
       }
     },
 
+
     getRandomWord() {
       const randomIndex = randomInteger(0, fiveLetterWords.length - 1)
       return fiveLetterWords[randomIndex]
