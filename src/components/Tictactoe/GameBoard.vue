@@ -32,6 +32,7 @@ export default {
 <style lang="scss" scoped>
 .table {
   margin: 0 auto;
+
   &.game-over {
     .cell:after {
       position: absolute;

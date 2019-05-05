@@ -1,66 +1,90 @@
 <template>
   <div id="app">
     <v-app>
+      <v-navigation-drawer v-model="drawer" app clipped touchless>
+        <v-list>
+          <v-list-tile to="/tictactoe">
+            <v-list-tile-title>Крестики-нолики</v-list-tile-title>
+          </v-list-tile>
+          <v-divider></v-divider>
+          <v-list-tile to="/balda">
+            <v-list-tile-title>Балда</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-navigation-drawer>
+
+      <v-toolbar color="indigo" dark app dense>
+        <v-toolbar-side-icon
+          @click.stop="drawer = !drawer"
+        ></v-toolbar-side-icon>
+        <v-toolbar-title>{{ toolbarTitle }}</v-toolbar-title>
+
+        <v-spacer></v-spacer>
+
+        <v-toolbar-items>
+          <v-btn v-if="isShowHomeLink" flat to="/">На главную</v-btn>
+        </v-toolbar-items>
+      </v-toolbar>
+
       <v-content>
         <router-view></router-view>
       </v-content>
 
-      <v-footer app color="indigo" dark height="auto">
-        <v-layout justify-center align-center wrap>
-          <v-flex shrink>
-            &copy; Иванников Дмитрий, {{ new Date().getFullYear() }}
-          </v-flex>
-
-          <v-flex shrink>
-            <v-btn
-              href="https://github.com/ytil/homeproject-vue-games"
-              tag="a"
-              target="_blank"
-              icon
-              small
-            >
-              <v-icon>fab fa-github</v-icon>
-            </v-btn>
-
-            <v-btn
-              href="https://t.me/ytil357"
-              tag="a"
-              target="_blank"
-              icon
-              small
-            >
-              <v-icon>fab fa-telegram</v-icon>
-            </v-btn>
-
-            <v-btn
-              href="mailto:ivannikov.web@gmail.com"
-              tag="a"
-              target="_blank"
-              icon
-              small
-            >
-              <v-icon>fab fa-google</v-icon>
-            </v-btn>
-          </v-flex>
-        </v-layout>
-      </v-footer>
+      <app-footer v-if="isShowFooter"></app-footer>
     </v-app>
   </div>
 </template>
 
 <script>
+import AppFooter from './components/AppFooter'
+
 export default {
   name: 'App',
+  components: {
+    'app-footer': AppFooter,
+  },
+  data() {
+    return {
+      drawer: null,
+      path: '/',
+    }
+  },
+  computed: {
+    toolbarTitle() {
+      switch (this.path) {
+        case '/tictactoe':
+          return 'Крестики-нолики'
+        case '/balda':
+          return 'Балда'
+        default:
+          return 'Настольные игры'
+      }
+    },
+
+    isShowHomeLink() {
+      return this.path !== '/'
+    },
+
+    isShowFooter() {
+      return this.path === '/'
+    },
+  },
+
+  watch: {
+    $route(newRoute) {
+      this.path = newRoute.path
+    },
+  },
 }
 </script>
 
 <style>
-  body {
-    font-family: Roboto, sans-serif;
-  }
+body {
+  font-family: Roboto, sans-serif;
+}
 
-  .toast-wrapper {
-    width: 550px !important;
-    max-width: 90vw !important;
-  }
+.toast-wrapper {
+  width: 550px !important;
+  max-width: 90vw !important;
+}
 </style>

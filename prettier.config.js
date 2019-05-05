@@ -4,6 +4,7 @@ module.exports = {
   trailingComma: 'all',
   bracketSpacing: true,
   jsxBracketSameLine: false,
+  htmlWhitespaceSensitivity: 'ignore',
   tabWidth: 2,
   semi: false,
 }

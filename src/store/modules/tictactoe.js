@@ -8,7 +8,7 @@ export default {
     nextMoveX: true,
     matrix: [],
     emptyCells: 0,
-    gameWinner: false,
+    gameWinner: null,
   },
 
   getters: {
@@ -17,8 +17,8 @@ export default {
     },
 
     gameOver(state) {
-      return state.gameWinner !== false
-    }
+      return state.gameWinner !== null
+    },
   },
 
   mutations: {
@@ -73,17 +73,17 @@ export default {
       const { width, height } = state
 
       const matrix = Array(height)
-        .fill(null)
-        .map(() => Array(width).fill(null))
+        .fill('')
+        .map(() => Array(width).fill(''))
 
       dispatch('RESET_TO_INITIAL')
       commit('SET_MATRIX', matrix)
     },
 
-    RESET_TO_INITIAL({commit}) {
+    RESET_TO_INITIAL({ commit }) {
       commit('RESET_ACTIVE_PLAYER')
       commit('RESET_EMPTY_CELLS')
       commit('RESET_GAME_WINNER')
-    }
+    },
   },
 }

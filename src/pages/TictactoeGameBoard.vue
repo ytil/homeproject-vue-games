@@ -1,43 +1,34 @@
 <template>
   <div class="wrapper">
-    <v-toolbar auto-height>
-      <v-toolbar-title>
-        Крестики-нолики
-      </v-toolbar-title>
-
-      <v-spacer></v-spacer>
-
-      <v-toolbar-items>
-        <v-btn flat to="/">На главную</v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
-
     <v-container>
-      <v-layout justify-center wrap>
-        <v-btn @click="INIT_NEW_GAME">Сбросить ходы</v-btn>
-        <v-btn @click="showSettings">Изменить настройки</v-btn>
-      </v-layout>
-
       <v-layout justify-center mt-3 mb-3 text-xs-center>
         <h1 v-if="gameOver">
-          Игра окончена <br />
+          Игра окончена
+          <br />
           Победил игрок {{ currentPlayer }}
         </h1>
         <h1 v-else>Ходит игрок {{ currentPlayer }}</h1>
       </v-layout>
 
       <v-layout>
-        <app-game-table></app-game-table>
+        <app-game-board></app-game-board>
       </v-layout>
-    </v-container>
 
-    <app-modal-results></app-modal-results>
-    <app-modal-settings></app-modal-settings>
+      <v-layout justify-center wrap>
+        <v-btn v-if="gameOver" @click="resetMoves" color="success">Новая игра</v-btn>
+        <v-btn v-else @click="resetMoves">Сбросить ходы</v-btn>
+        <v-btn @click="showSettings">Изменить настройки</v-btn>
+      </v-layout>
+
+      <app-modal-results></app-modal-results>
+      <app-modal-settings></app-modal-settings>
+
+    </v-container>
   </div>
 </template>
 
 <script>
-import GameTable from '../components/Tictactoe/GameBoard'
+import GameBoard from '../components/Tictactoe/GameBoard'
 import ModalResults from '../components/Tictactoe/ModalResults'
 import ModalSettings from '../components/Tictactoe/ModalSettings'
 import { mapGetters, mapActions } from 'vuex'
@@ -47,7 +38,7 @@ export default {
   components: {
     'app-modal-settings': ModalSettings,
     'app-modal-results': ModalResults,
-    'app-game-table': GameTable,
+    'app-game-board': GameBoard,
   },
 
   computed: {
@@ -56,6 +47,10 @@ export default {
 
   methods: {
     ...mapActions('tictactoe', ['INIT_NEW_GAME']),
+
+    resetMoves() {
+      this.INIT_NEW_GAME()
+    },
 
     showSettings() {
       this.$modal.show('tictactoe-game-settings')
@@ -79,5 +74,4 @@ export default {
   background-repeat: repeat;
   background-size: 7em;
 }
-
 </style>

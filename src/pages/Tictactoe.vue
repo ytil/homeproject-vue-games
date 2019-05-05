@@ -1,42 +1,30 @@
 <template>
   <v-container>
-
     <v-layout justify-center>
       <h1>Крестики-нолики</h1>
     </v-layout>
 
     <v-divider></v-divider>
 
-    <v-layout justify-center mt-5>
-      <b class="text-xs-center"
-      >Использованы следующие технологии и библиотеки:</b
-      >
+    <v-layout>
+      <p class="text-xs-center">Выберите параметры для игры. Высоту и ширину игрового поля, а так же кол-во совпадений подряд для выигрыша</p>
     </v-layout>
 
-    <v-layout justify-center mb-3>
-      <v-chip>Vue</v-chip>
-      <v-chip>Vuex</v-chip>
-      <v-chip>Vue-router</v-chip>
-      <v-chip>Vuetify</v-chip>
-    </v-layout>
-
-    <v-layout mb-3>
-      <v-flex>
-        <app-game-settings></app-game-settings>
-      </v-flex>
+    <v-layout mt-5 mb-3>
+      <app-game-settings></app-game-settings>
     </v-layout>
 
     <v-layout justify-center mb-5>
-      <v-btn @click.native="INIT_NEW_GAME" to="/board" dark large color="indigo"
-      >Играть</v-btn
+      <v-btn
+        @click.native="INIT_NEW_GAME"
+        to="/tictactoe/board"
+        dark
+        large
+        color="indigo"
       >
+        Играть
+      </v-btn>
     </v-layout>
-
-    <v-layout>
-      <v-btn to="/balda" large>to balda</v-btn>
-    </v-layout>
-
-
   </v-container>
 </template>
 

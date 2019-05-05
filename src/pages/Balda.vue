@@ -1,13 +1,9 @@
 <template>
   <v-container>
-    <p>Кликните на доступную ячейку (подсвечена голубым) и выберите букву</p>
-    <p>Выберите слово поочередно кликая по буквам или используя выделение</p>
-    <p>Подтвердите ход</p>
-
     <v-layout justify-center mb-2>
-      <b v-if="!gameOver" class="headline"
-        >Сейчас ходит {{ formattedPlayerName }}</b
-      >
+      <b v-if="!gameOver" class="headline">
+        Сейчас ходит {{ formattedPlayerName }}
+      </b>
       <b v-else>
         Игра окончена
       </b>
@@ -41,9 +37,9 @@
       <v-layout>
         <p>
           <b class="subheading">Выбранное слово:</b>
-          <b v-if="this.selectedCells.length > 0" class=" title ml-3">{{
-            this.selectedWord.toUpperCase()
-          }}</b>
+          <b v-if="this.selectedCells.length > 0" class=" title ml-3 text-uppercase">
+            {{ this.selectedWord }}
+          </b>
           <span v-else class="ml-3">Пока не выбрано</span>
         </p>
       </v-layout>
@@ -65,10 +61,16 @@
         </v-flex>
 
         <v-flex xs12 sm4>
-          <v-btn block color="success" :disabled="!gameOver" @click="makeMove">Сделать ход </v-btn>
+          <v-btn block color="success" :disabled="gameOver" @click="makeMove">
+            Сделать ход
+          </v-btn>
         </v-flex>
       </v-layout>
     </v-layout>
+
+    <p>Кликните на доступную ячейку (подсвечена голубым) и выберите букву</p>
+    <p>Выберите слово поочередно кликая по буквам или используя выделение</p>
+    <p>Подтвердите ход</p>
 
     <app-modal-results @restart="restartGame"></app-modal-results>
   </v-container>
@@ -177,7 +179,7 @@ export default {
 
         this.selectCell(cellIndex, rowIndex)
       }
-    }, 25),
+    }, 50),
 
     onDragSelect(cellIndex, rowIndex) {
       if (this.dragStart === true) {
@@ -245,7 +247,6 @@ export default {
       }
     },
 
-
     getRandomWord() {
       const randomIndex = randomInteger(0, fiveLetterWords.length - 1)
       return fiveLetterWords[randomIndex]
@@ -278,7 +279,7 @@ export default {
         this.resetMove()
       } else if (dictionary[this.selectedWord] === undefined) {
         this.$toasted.show(
-          `<span>В нашем словаре нет слова <b>${this.selectedWord.toUpperCase()}</b></span>`,
+          `<span>В нашем словаре нет слова <b class="text-uppercase">${this.selectedWord}</b></span>`,
           {
             duration: 0,
             action: [
@@ -309,6 +310,7 @@ export default {
     },
 
     resetMove() {
+      this.clearNotifications()
       this.selectedCells = []
       this.isWordContainsTargetLetter = false
       this.RESET_TARGET_CELL()

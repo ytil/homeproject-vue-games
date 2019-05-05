@@ -2,9 +2,7 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 import ElementUI from 'element-ui'
 import VModal from 'vue-js-modal'
-import Toasted from 'vue-toasted';
-
-
+import Toasted from 'vue-toasted'
 
 import App from './App.vue'
 import store from './store'
@@ -24,12 +22,11 @@ Vue.use(Vuetify, {
 Vue.use(ElementUI)
 Vue.use(VModal)
 Vue.use(Toasted, {
-  position: 'bottom-center',
+  position: 'top-center',
   duration: 2500,
   iconPack: 'material',
-  className: 'toast-wrapper'
+  className: 'toast-wrapper',
 })
-
 
 Vue.config.productionTip = false
 

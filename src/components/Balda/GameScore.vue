@@ -9,7 +9,8 @@
         <v-layout align-center justify-space-between>
           <v-flex xs6>
             <span class="subheading mx-2">
-              Игрок 1 <b class="mx-3 title">{{ score.player1.total }}</b>
+              Игрок 1
+              <b class="mx-3 title">{{ score.player1.total }}</b>
             </span>
           </v-flex>
 
@@ -17,10 +18,10 @@
 
           <v-flex xs6>
             <span class="subheading mx-2">
-              Игрок 2 <b class="mx-3 title">{{ score.player2.total }}</b>
+              Игрок 2
+              <b class="mx-3 title">{{ score.player2.total }}</b>
             </span>
           </v-flex>
-
         </v-layout>
       </template>
 
@@ -60,12 +61,12 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 
-  export default {
-    name: 'GameScore',
-    computed: {
-      ...mapState('balda', ['score']),
-    },
-  }
+export default {
+  name: 'GameScore',
+  computed: {
+    ...mapState('balda', ['score']),
+  },
+}
 </script>
