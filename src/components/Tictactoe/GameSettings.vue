@@ -127,7 +127,8 @@ export default {
 
 <style scoped>
 .game-settings {
-  max-width: 80%;
+  width: 550px;
+  max-width: 80vw;
   margin: 0 auto;
 }
 </style>

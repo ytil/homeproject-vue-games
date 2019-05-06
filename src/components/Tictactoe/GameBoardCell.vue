@@ -1,83 +1,16 @@
 <template>
   <div
     class="cell"
-    :class="clickedCellClassName"
-    @click="onCellClick"
+    v-on="$listeners"
     @mousedown.prevent
   >
-    {{ cellContent }}
+    <slot></slot>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex'
-import TictactoeWinChecker from '../../utils/TictactoeWinChecker'
-
 export default {
-  name: 'VTableCell',
-  props: {
-    x: Number,
-    y: Number,
-    cellContent: String,
-  },
-
-  computed: {
-    ...mapState('tictactoe', ['matrix', 'winningLine', 'emptyCells']),
-    ...mapGetters('tictactoe', ['currentPlayer', 'gameOver']),
-
-    clickedCellClassName() {
-      if (this.cellContent === '') {
-        return ''
-      }
-
-      return this.cellContent === 'X' ? 'clicked cell-x' : 'clicked cell-o'
-    },
-  },
-
-  methods: {
-    ...mapMutations('tictactoe', [
-      'CHANGE_MATRIX_CELL',
-      'DECREASE_EMPTY_CELLS',
-      'SET_WINNER',
-      'SET_DRAW',
-      'CHANGE_PLAYER',
-    ]),
-
-    onCellClick() {
-      //break if game is over or clicked cell is not empty
-      if (this.gameOver || this.matrix[this.y][this.x] !== '') {
-        return
-      }
-
-      this.CHANGE_MATRIX_CELL({
-        x: this.x,
-        y: this.y,
-        player: this.currentPlayer,
-      })
-
-      this.DECREASE_EMPTY_CELLS()
-
-      this.checkWin()
-    },
-
-    checkWin() {
-      const win = new TictactoeWinChecker(
-        this.x,
-        this.y,
-        this.currentPlayer,
-        this.matrix,
-        this.winningLine,
-      ).calc()
-
-      if (win) {
-        this.SET_WINNER(this.currentPlayer)
-      } else if (this.emptyCells === 0) {
-        this.SET_DRAW()
-      } else {
-        this.CHANGE_PLAYER()
-      }
-    },
-  },
+  name: 'GameBoardCell',
 }
 </script>
 
@@ -105,6 +38,6 @@ export default {
 }
 
 .cell-o {
-  background-color: #ff9800;
+  background-color: goldenrod;
 }
 </style>

@@ -68,10 +68,6 @@
       </v-layout>
     </v-layout>
 
-    <p>Кликните на доступную ячейку (подсвечена голубым) и выберите букву</p>
-    <p>Выберите слово поочередно кликая по буквам или используя выделение</p>
-    <p>Подтвердите ход</p>
-
     <app-modal-results @restart="restartGame"></app-modal-results>
   </v-container>
 </template>

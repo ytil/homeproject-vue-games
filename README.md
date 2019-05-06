@@ -1,29 +1,6 @@
-# vue-home
+# Настольные игры
 
-## Project setup
-```
-yarn install
-```
+# Домашний проект по разработке настольных браузерных игр
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+хостинг https://ytil.github.io/homeproject-vue-games/
 
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

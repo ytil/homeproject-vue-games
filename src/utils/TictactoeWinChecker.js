@@ -1,150 +1,150 @@
 export default class TictactoeWinChecker {
-  constructor(x, y, player, matrix, winningLine) {
-    this.x = x
-    this.y = y
+  constructor(cellIndex, rowIndex, player, matrix, winningLine) {
+    this.cellIndex = cellIndex
+    this.rowIndex = rowIndex
     this.player = player
     this.matrix = matrix
     this.winningLine = winningLine
-    this.s = winningLine - 1 // best possible substring length from click point to matrix extremum
+    this.maxSubstringLength = winningLine - 1 // best possible substring length from click point to matrix extremum
     this.MAX_X_AXIS_VALUE = matrix[0].length - 1
     this.MAX_Y_AXIS_VALUE = matrix.length - 1
   }
 
-  getTopSubstring(x, y, s) {
+  getTopSubstring(cellIndex, rowIndex, substringLength) {
     const result = []
 
-    while (y > 0 && s > 0) {
-      y = y - 1
-      s = s - 1
+    while (rowIndex > 0 && substringLength > 0) {
+      rowIndex = rowIndex - 1
+      substringLength = substringLength - 1
 
-      let cell = this.matrix[y][x]
-      if (cell === null || cell !== this.player) {
+      let cellContent = this.matrix[rowIndex][cellIndex]
+      if (cellContent === null || cellContent !== this.player) {
         break
       }
-      result.push(cell)
+      result.push(cellContent)
     }
 
     return result
   }
 
-  getBottomSubstring(x, y, s) {
+  getBottomSubstring(cellIndex, rowIndex, substringLength) {
     const result = []
 
-    while (y < this.MAX_Y_AXIS_VALUE && s > 0) {
-      y = y + 1
-      s = s - 1
+    while (rowIndex < this.MAX_Y_AXIS_VALUE && substringLength > 0) {
+      rowIndex = rowIndex + 1
+      substringLength = substringLength - 1
 
-      let cell = this.matrix[y][x]
-      if (cell === null || cell !== this.player) {
+      let cellContent = this.matrix[rowIndex][cellIndex]
+      if (cellContent === null || cellContent !== this.player) {
         break
       }
-      result.push(cell)
+      result.push(cellContent)
     }
 
     return result
   }
 
-  getLeftSubstring(x, y, s) {
+  getLeftSubstring(cellIndex, rowIndex, substringLength) {
     const result = []
 
-    while (x > 0 && s > 0) {
-      x = x - 1
-      s = s - 1
+    while (cellIndex > 0 && substringLength > 0) {
+      cellIndex = cellIndex - 1
+      substringLength = substringLength - 1
 
-      let cell = this.matrix[y][x]
-      if (cell === null || cell !== this.player) {
+      let cellContent = this.matrix[rowIndex][cellIndex]
+      if (cellContent === null || cellContent !== this.player) {
         break
       }
-      result.push(cell)
+      result.push(cellContent)
     }
 
     return result
   }
 
-  getRightSubstring(x, y, s) {
+  getRightSubstring(cellIndex, rowIndex, substringLength) {
     const result = []
 
-    while (x < this.MAX_X_AXIS_VALUE && s > 0) {
-      x = x + 1
-      s = s - 1
+    while (cellIndex < this.MAX_X_AXIS_VALUE && substringLength > 0) {
+      cellIndex = cellIndex + 1
+      substringLength = substringLength - 1
 
-      let cell = this.matrix[y][x]
-      if (cell === null || cell !== this.player) {
+      let cellContent = this.matrix[rowIndex][cellIndex]
+      if (cellContent === null || cellContent !== this.player) {
         break
       }
-      result.push(cell)
+      result.push(cellContent)
     }
 
     return result
   }
 
-  getTopLeftSubstring(x, y, s) {
+  getTopLeftSubstring(cellIndex, rowIndex, substringLength) {
     const result = []
 
-    while (x > 0 && y > 0 && s > 0) {
-      x = x - 1
-      y = y - 1
-      s = s - 1
+    while (cellIndex > 0 && rowIndex > 0 && substringLength > 0) {
+      cellIndex = cellIndex - 1
+      rowIndex = rowIndex - 1
+      substringLength = substringLength - 1
 
-      let cell = this.matrix[y][x]
-      if (cell === null || cell !== this.player) {
+      let cellContent = this.matrix[rowIndex][cellIndex]
+      if (cellContent === null || cellContent !== this.player) {
         break
       }
-      result.push(cell)
+      result.push(cellContent)
     }
 
     return result
   }
 
-  getTopRightSubstring(x, y, s) {
+  getTopRightSubstring(cellIndex, rowIndex, substringLength) {
     const result = []
 
-    while (x < this.MAX_X_AXIS_VALUE && y > 0 && s > 0) {
-      x = x + 1
-      y = y - 1
-      s = s - 1
+    while (cellIndex < this.MAX_X_AXIS_VALUE && rowIndex > 0 && substringLength > 0) {
+      cellIndex = cellIndex + 1
+      rowIndex = rowIndex - 1
+      substringLength = substringLength - 1
 
-      let cell = this.matrix[y][x]
-      if (cell === null || cell !== this.player) {
+      let cellContent = this.matrix[rowIndex][cellIndex]
+      if (cellContent === null || cellContent !== this.player) {
         break
       }
-      result.push(cell)
+      result.push(cellContent)
     }
 
     return result
   }
 
-  getBottomLeftSubstring(x, y, s) {
+  getBottomLeftSubstring(cellIndex, rowIndex, substringLength) {
     const result = []
 
-    while (x > 0 && y < this.MAX_Y_AXIS_VALUE && s > 0) {
-      x = x - 1
-      y = y + 1
-      s = s - 1
+    while (cellIndex > 0 && rowIndex < this.MAX_Y_AXIS_VALUE && substringLength > 0) {
+      cellIndex = cellIndex - 1
+      rowIndex = rowIndex + 1
+      substringLength = substringLength - 1
 
-      let cell = this.matrix[y][x]
-      if (cell === null || cell !== this.player) {
+      let cellContent = this.matrix[rowIndex][cellIndex]
+      if (cellContent === null || cellContent !== this.player) {
         break
       }
-      result.push(cell)
+      result.push(cellContent)
     }
 
     return result
   }
 
-  getBottomRightSubstring(x, y, s) {
+  getBottomRightSubstring(cellIndex, rowIndex, substringLength) {
     const result = []
 
-    while (x < this.MAX_X_AXIS_VALUE && y < this.MAX_Y_AXIS_VALUE && s > 0) {
-      x = x + 1
-      y = y + 1
-      s = s - 1
+    while (cellIndex < this.MAX_X_AXIS_VALUE && rowIndex < this.MAX_Y_AXIS_VALUE && substringLength > 0) {
+      cellIndex = cellIndex + 1
+      rowIndex = rowIndex + 1
+      substringLength = substringLength - 1
 
-      let cell = this.matrix[y][x]
-      if (cell === null || cell !== this.player) {
+      let cellContent = this.matrix[rowIndex][cellIndex]
+      if (cellContent === null || cellContent !== this.player) {
         break
       }
-      result.push(cell)
+      result.push(cellContent)
     }
 
     return result
@@ -152,33 +152,65 @@ export default class TictactoeWinChecker {
 
   getHorizontal() {
     return [
-      ...this.getLeftSubstring(this.x, this.y, this.s),
+      ...this.getLeftSubstring(
+        this.cellIndex,
+        this.rowIndex,
+        this.maxSubstringLength,
+      ),
       this.player,
-      ...this.getRightSubstring(this.x, this.y, this.s),
+      ...this.getRightSubstring(
+        this.cellIndex,
+        this.rowIndex,
+        this.maxSubstringLength,
+      ),
     ].join('')
   }
 
   getVertical() {
     return [
-      ...this.getTopSubstring(this.x, this.y, this.s),
+      ...this.getTopSubstring(
+        this.cellIndex,
+        this.rowIndex,
+        this.maxSubstringLength,
+      ),
       this.player,
-      ...this.getBottomSubstring(this.x, this.y, this.s),
+      ...this.getBottomSubstring(
+        this.cellIndex,
+        this.rowIndex,
+        this.maxSubstringLength,
+      ),
     ].join('')
   }
 
   getFirstDiagonal() {
     return [
-      ...this.getTopLeftSubstring(this.x, this.y, this.s),
+      ...this.getTopLeftSubstring(
+        this.cellIndex,
+        this.rowIndex,
+        this.maxSubstringLength,
+      ),
       this.player,
-      ...this.getBottomRightSubstring(this.x, this.y, this.s),
+      ...this.getBottomRightSubstring(
+        this.cellIndex,
+        this.rowIndex,
+        this.maxSubstringLength,
+      ),
     ].join('')
   }
 
   getSecondDiagonal() {
     return [
-      ...this.getBottomLeftSubstring(this.x, this.y, this.s),
+      ...this.getBottomLeftSubstring(
+        this.cellIndex,
+        this.rowIndex,
+        this.maxSubstringLength,
+      ),
       this.player,
-      ...this.getTopRightSubstring(this.x, this.y, this.s),
+      ...this.getTopRightSubstring(
+        this.cellIndex,
+        this.rowIndex,
+        this.maxSubstringLength,
+      ),
     ].join('')
   }
 
@@ -194,8 +226,8 @@ export default class TictactoeWinChecker {
   calc() {
     const regexp = new RegExp(`[${this.player}]{${this.winningLine}}`)
     const lines = this.getPossibleWinningLines()
-    const winner = lines.some(line => regexp.test(line))
+    const isWinner = lines.some(line => regexp.test(line))
 
-    return winner
+    return isWinner
   }
 }

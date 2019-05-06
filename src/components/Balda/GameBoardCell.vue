@@ -144,7 +144,7 @@ export default {
     z-index: 1;
   }
 
-  &[x-placement^='top'] {
+  &[cellIndex-placement^='top'] {
     margin-bottom: 5px;
 
     .tooltip-arrow {
@@ -159,7 +159,7 @@ export default {
     }
   }
 
-  &[x-placement^='bottom'] {
+  &[cellIndex-placement^='bottom'] {
     margin-top: 5px;
 
     .tooltip-arrow {
@@ -174,7 +174,7 @@ export default {
     }
   }
 
-  &[x-placement^='right'] {
+  &[cellIndex-placement^='right'] {
     margin-left: 5px;
 
     .tooltip-arrow {
@@ -189,7 +189,7 @@ export default {
     }
   }
 
-  &[x-placement^='left'] {
+  &[cellIndex-placement^='left'] {
     margin-right: 5px;
 
     .tooltip-arrow {

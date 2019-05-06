@@ -85,5 +85,10 @@ export default {
       commit('RESET_EMPTY_CELLS')
       commit('RESET_GAME_WINNER')
     },
+
+    APPLY_MOVE({commit}, moveObject) {
+      commit('CHANGE_MATRIX_CELL', moveObject)
+      commit('DECREASE_EMPTY_CELLS')
+    }
   },
 }
