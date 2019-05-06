@@ -5,6 +5,7 @@
 доступные игры:
 1.  Балда
 2.  Крестики-нолики
+
 готовность: 80%
 
 хостинг https://ytil.github.io/homeproject-vue-games/
