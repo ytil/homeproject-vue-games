@@ -139,7 +139,7 @@ export default {
       const { currentPlayer } = getters
 
       commit('DECREASE_EMPTY_CELLS')
-      commit('UPDATE_SCORE', { word: word, player: currentPlayer })
+      commit('UPDATE_SCORE', { word, player: currentPlayer })
       commit('ADD_LETTER_TO_MATRIX', { x, y, letter })
       commit('RESET_TARGET_CELL')
       commit('CHANGE_ACTIVE_PLAYER')

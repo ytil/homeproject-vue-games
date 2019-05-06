@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../pages/Home'
-import Tictactoe from '../pages/Tictactoe'
-import TictactoeGameBoard from '../pages/TictactoeGameBoard'
-import Balda from '../pages/Balda'
+import Home from '../pages/AppHomePage'
+import Tictactoe from '../pages/TictactoeHomePage'
+import TictactoeGameBoard from '../pages/TictactoeGameBoardPage'
+import Balda from '../pages/BaldaGameBoardPage'
 
 Vue.use(VueRouter)
 

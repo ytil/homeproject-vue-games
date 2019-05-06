@@ -16,13 +16,16 @@
         <v-btn @click="apply" flat color="indigo">
           Применить
         </v-btn>
+
+        <v-btn @click="cancel" flat color="error">
+          Отмена
+        </v-btn>
       </v-card-actions>
     </v-card>
   </modal>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import GameSettings from './GameSettings'
 
 export default {
@@ -32,10 +35,11 @@ export default {
   },
 
   methods: {
-    ...mapActions('tictactoe', ['INIT_NEW_GAME']),
-
+    cancel() {
+      this.$modal.hide('tictactoe-game-settings')
+    },
     apply() {
-      this.INIT_NEW_GAME()
+      this.$emit('apply-settings')
       this.$modal.hide('tictactoe-game-settings')
     },
   },

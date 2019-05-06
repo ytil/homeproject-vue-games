@@ -18,32 +18,27 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import GameBoardCell from './GameBoardCell'
 import TictactoeWinChecker from '../../utils/TictactoeWinChecker'
 
 export default {
+  components: {
+    'app-cell': GameBoardCell,
+  },
   computed: {
     ...mapState('tictactoe', ['matrix', 'winningLine', 'emptyCells']),
     ...mapGetters('tictactoe', ['currentPlayer', 'gameOver']),
   },
-  components: {
-    'app-cell': GameBoardCell,
-  },
   methods: {
-    ...mapMutations('tictactoe', [
-      'CHANGE_MATRIX_CELL',
-      'DECREASE_EMPTY_CELLS',
-      'SET_WINNER',
-      'SET_DRAW',
-      'CHANGE_PLAYER',
-    ]),
+    ...mapMutations('tictactoe', ['SET_WINNER', 'CHANGE_PLAYER']),
+    ...mapActions('tictactoe', ['APPLY_MOVE']),
 
     calcCellClassName(cellContent) {
       if (cellContent === 'X') {
-        return 'cell-cellIndex'
+        return 'clicked cell-x'
       } else if (cellContent === 'O') {
-        return 'cell-o'
+        return 'clicked cell-o'
       } else return ''
     },
 
@@ -54,7 +49,9 @@ export default {
       }
 
       this.APPLY_MOVE({
-        cellIndex, rowIndex, player: this.currentPlayer
+        cellIndex,
+        rowIndex,
+        player: this.currentPlayer,
       })
 
       const isWinning = new TictactoeWinChecker(

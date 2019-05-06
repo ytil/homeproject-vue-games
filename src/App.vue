@@ -3,11 +3,11 @@
     <v-app>
       <v-navigation-drawer v-model="drawer" app clipped touchless>
         <v-list>
-          <v-list-tile to="/tictactoe">
+          <v-list-tile to="/tictactoe" @click="drawer = false">
             <v-list-tile-title>Крестики-нолики</v-list-tile-title>
           </v-list-tile>
           <v-divider></v-divider>
-          <v-list-tile to="/balda">
+          <v-list-tile to="/balda" @click="drawer = false">
             <v-list-tile-title>Балда</v-list-tile-title>
           </v-list-tile>
         </v-list>
@@ -45,7 +45,7 @@ export default {
   },
   data() {
     return {
-      drawer: null,
+      drawer: false,
       path: '/',
     }
   },
@@ -53,6 +53,8 @@ export default {
     toolbarTitle() {
       switch (this.path) {
         case '/tictactoe':
+          return 'Крестики-нолики'
+        case '/tictactoe/board':
           return 'Крестики-нолики'
         case '/balda':
           return 'Балда'

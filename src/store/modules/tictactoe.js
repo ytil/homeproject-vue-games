@@ -51,8 +51,8 @@ export default {
     },
 
     CHANGE_MATRIX_CELL(state, payload) {
-      const { x, y, player } = payload
-      state.matrix[y].splice(x, 1, player)
+      const { cellIndex, rowIndex, player } = payload
+      state.matrix[rowIndex].splice(cellIndex, 1, player)
     },
 
     DECREASE_EMPTY_CELLS(state) {
@@ -86,9 +86,9 @@ export default {
       commit('RESET_GAME_WINNER')
     },
 
-    APPLY_MOVE({commit}, moveObject) {
-      commit('CHANGE_MATRIX_CELL', moveObject)
+    APPLY_MOVE({ commit }, coords) {
+      commit('CHANGE_MATRIX_CELL', coords)
       commit('DECREASE_EMPTY_CELLS')
-    }
+    },
   },
 }

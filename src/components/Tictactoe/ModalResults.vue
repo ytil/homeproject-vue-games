@@ -16,7 +16,7 @@
 
         <template v-else>
           <v-layout mb-3 justify-center>
-            <h1 class="text-xs-center">Победил игрок {{ currentPlayer }}</h1>
+            <h1 class="text-xs-center">Победил игрок {{ gameWinner }}</h1>
           </v-layout>
           <img src="../../assets/congrats.gif" alt="Радость победы" />
         </template>
@@ -38,18 +38,16 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   name: 'ModalGameResults',
   computed: {
     ...mapState('tictactoe', ['gameWinner']),
-    ...mapGetters('tictactoe', ['currentPlayer']),
   },
 
   methods: {
-    ...mapActions('tictactoe', ['INIT_NEW_GAME']),
     restart() {
-      this.INIT_NEW_GAME()
+      this.$emit('restart')
       this.$modal.hide('tictactoe-game-results')
     },
     cancel() {
