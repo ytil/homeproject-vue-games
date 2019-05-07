@@ -23,8 +23,8 @@ export default {
     nextMovePlayer1: true,
     emptyCells: 20,
     targetCell: {
-      x: null,
-      y: null,
+      cellIndex: null,
+      rowIndex: null,
       letter: null,
     },
     gameWinner: null,
@@ -52,15 +52,15 @@ export default {
 
     RESET_TARGET_CELL(state) {
       state.targetCell = {
-        x: null,
-        y: null,
+        cellIndex: null,
+        rowIndex: null,
         letter: null,
       }
     },
 
     ADD_LETTER_TO_MATRIX(state, payload) {
-      const { x, y, letter } = payload
-      state.board[y].splice(x, 1, letter)
+      const { cellIndex, rowIndex, letter } = payload
+      state.board[rowIndex].splice(cellIndex, 1, letter)
     },
 
     CHANGE_ACTIVE_PLAYER(state, player) {
@@ -135,12 +135,12 @@ export default {
     },
 
     APPLY_MOVE({ state, getters, commit }, word) {
-      const { x, y, letter } = state.targetCell
+      const { cellIndex, rowIndex, letter } = state.targetCell
       const { currentPlayer } = getters
 
       commit('DECREASE_EMPTY_CELLS')
       commit('UPDATE_SCORE', { word, player: currentPlayer })
-      commit('ADD_LETTER_TO_MATRIX', { x, y, letter })
+      commit('ADD_LETTER_TO_MATRIX', { cellIndex, rowIndex, letter })
       commit('RESET_TARGET_CELL')
       commit('CHANGE_ACTIVE_PLAYER')
     },

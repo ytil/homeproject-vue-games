@@ -34,8 +34,8 @@ export default {
   },
 
   props: {
-    x: Number,
-    y: Number,
+    cellIndex: Number,
+    rowIndex: Number,
     letter: String,
     available: Boolean,
     target: Boolean,
@@ -71,7 +71,11 @@ export default {
 
     applyLetter(letter) {
       this.isPopoverOpen = false
-      const payload = { x: this.x, y: this.y, letter }
+      const payload = {
+        cellIndex: this.cellIndex,
+        rowIndex: this.rowIndex,
+        letter,
+      }
       this.SET_TARGET_CELL(payload)
     },
   },

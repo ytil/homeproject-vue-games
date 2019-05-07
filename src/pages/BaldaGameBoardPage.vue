@@ -21,8 +21,8 @@
           <app-cell
             v-for="(cell, cellIndex) in row"
             :key="cellIndex"
-            :x="cellIndex"
-            :y="rowIndex"
+            :cellIndex="cellIndex"
+            :rowIndex="rowIndex"
             :letter="cell"
             :available="isAvailableCell(cellIndex, rowIndex)"
             :target="isTargetCell(cellIndex, rowIndex)"
@@ -37,7 +37,10 @@
       <v-layout>
         <p>
           <b class="subheading">Выбранное слово:</b>
-          <b v-if="this.selectedCells.length > 0" class=" title ml-3 text-uppercase">
+          <b
+            v-if="this.selectedCells.length > 0"
+            class=" title ml-3 text-uppercase"
+          >
             {{ this.selectedWord }}
           </b>
           <span v-else class="ml-3">Пока не выбрано</span>
@@ -95,7 +98,6 @@ export default {
     return {
       dragStart: false,
       selectedCells: [],
-      isWordContainsTargetLetter: false,
     }
   },
 
@@ -137,6 +139,11 @@ export default {
 
     isReadyToSelect() {
       return this.targetCell.letter !== null && !this.gameOver
+    },
+
+    isWordContainsTargetLetter() {
+      const { cellIndex, rowIndex } = this.targetCell
+      return this.selectedCells.includes(`${rowIndex}${cellIndex}`)
     },
 
     selectedWord() {
@@ -184,7 +191,7 @@ export default {
     },
 
     getLastSelectedCell() {
-      if (this.selectedCells.length === 0) return
+      if (this.selectedCells.length === 0) return false
       const last = this.selectedCells[this.selectedCells.length - 1]
       const rowIndex = +last[0]
       const cellIndex = +last[1]
@@ -207,7 +214,10 @@ export default {
     },
 
     isTargetCell(cellIndex, rowIndex) {
-      return this.targetCell.x === cellIndex && this.targetCell.y === rowIndex
+      return (
+        this.targetCell.cellIndex === cellIndex &&
+        this.targetCell.rowIndex === rowIndex
+      )
     },
 
     isSelectedCell(cellIndex, rowIndex) {
@@ -220,25 +230,26 @@ export default {
 
     selectCell(cellIndex, rowIndex) {
       if (
-        this.isReadyToSelect === false ||
-        this.selectedCells.includes(`${rowIndex}${cellIndex}`) === true
+        !this.isReadyToSelect ||
+        this.selectedCells.includes(`${rowIndex}${cellIndex}`)
+      ) {
+        return
+      }
+
+      if (
+        this.board[rowIndex][cellIndex] === '' &&
+        !this.isTargetCell(cellIndex, rowIndex)
       ) {
         return
       }
 
       const lastSelectedCell = this.getLastSelectedCell()
-      const currentSelectedCell = { cellIndex, rowIndex }
+      const currentCell = { cellIndex, rowIndex }
 
       if (
-        lastSelectedCell === undefined ||
-        this.isNeighbourCells(currentSelectedCell, lastSelectedCell) === true
+        !lastSelectedCell ||
+        this.isNeighbourCells(currentCell, lastSelectedCell)
       ) {
-        if (this.isTargetCell(cellIndex, rowIndex)) {
-          this.isWordContainsTargetLetter = true
-        } else if (this.board[rowIndex][cellIndex] === '') {
-          return
-        }
-
         this.selectedCells.push(`${rowIndex}${cellIndex}`)
       }
     },
@@ -257,7 +268,7 @@ export default {
         this.$toasted.error('Минимальная необходимая длина слова - 3 буквы', {
           icon: 'error_outline',
         })
-      } else if (this.isWordContainsTargetLetter === false) {
+      } else if (!this.isWordContainsTargetLetter) {
         this.$toasted.error('Слово должно содержать выбранную вами букву', {
           icon: 'error_outline',
         })
@@ -275,7 +286,9 @@ export default {
         this.resetMove()
       } else if (dictionary[this.selectedWord] === undefined) {
         this.$toasted.show(
-          `<span>В нашем словаре нет слова <b class="text-uppercase">${this.selectedWord}</b></span>`,
+          `<span>В нашем словаре нет слова <b class="text-uppercase">${
+            this.selectedWord
+          }</b></span>`,
           {
             duration: 0,
             action: [
@@ -308,7 +321,6 @@ export default {
     resetMove() {
       this.clearNotifications()
       this.selectedCells = []
-      this.isWordContainsTargetLetter = false
       this.RESET_TARGET_CELL()
     },
 
@@ -318,7 +330,6 @@ export default {
         icon: 'done',
       })
       this.selectedCells = []
-      this.isWordContainsTargetLetter = false
     },
 
     restartGame() {
@@ -357,15 +368,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-table {
-  border-collapse: separate;
-  border-spacing: 2px;
-  background-color: white;
-}
-
 .board-wrapper {
   box-sizing: border-box;
   width: 408px;
+
+  table {
+    border-collapse: separate;
+    border-spacing: 2px;
+    background-color: white;
+  }
 
   @media (max-width: 600px) {
     width: 288px;
