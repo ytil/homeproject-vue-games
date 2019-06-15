@@ -27,7 +27,7 @@
       </p>
     </v-layout>
 
-    <v-layout my-3>
+    <v-layout my-3 justify-center>
       <app-game-settings></app-game-settings>
     </v-layout>
 

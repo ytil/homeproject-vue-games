@@ -27,9 +27,9 @@
       </ul>
     </v-layout>
 
-    <v-layout mt-2 column>
-      <v-btn color="error" flat small @click="cancel">Отмена</v-btn>
-      <v-btn color="indigo" flat small @click="apply">ОК</v-btn>
+    <v-layout mt-2>
+      <v-btn color="error" flat @click="cancel">Отмена</v-btn>
+      <v-btn color="indigo" flat @click="apply">ОК</v-btn>
     </v-layout>
   </div>
 </template>
@@ -80,7 +80,9 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 15px 0;
   font-family: Roboto, sans-serif;
+  background-color: white;
 }
 
 ul {

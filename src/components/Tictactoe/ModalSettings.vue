@@ -1,28 +1,26 @@
 <template>
-  <modal name="tictactoe-game-settings" height="auto" adaptive>
-    <v-card>
-      <v-card-title class="headline grey lighten-2" primary-title>
-        Настройки
-      </v-card-title>
+  <v-card>
+    <v-card-title class="headline grey lighten-2" primary-title>
+      Настройки
+    </v-card-title>
 
-      <v-card-text>
-        <app-game-settings></app-game-settings>
-      </v-card-text>
+    <v-card-text>
+      <app-game-settings></app-game-settings>
+    </v-card-text>
 
-      <v-divider></v-divider>
+    <v-divider></v-divider>
 
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn @click="apply" flat color="indigo">
-          Применить
-        </v-btn>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn @click="$emit('apply')" flat color="indigo">
+        Применить
+      </v-btn>
 
-        <v-btn @click="cancel" flat color="error">
-          Отмена
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </modal>
+      <v-btn @click="$emit('cancel')" flat color="error">
+        Отмена
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
@@ -32,16 +30,6 @@ export default {
   name: 'ModalGameSettings',
   components: {
     'app-game-settings': GameSettings,
-  },
-
-  methods: {
-    cancel() {
-      this.$modal.hide('tictactoe-game-settings')
-    },
-    apply() {
-      this.$emit('apply-settings')
-      this.$modal.hide('tictactoe-game-settings')
-    },
   },
 }
 </script>

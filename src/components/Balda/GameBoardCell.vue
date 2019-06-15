@@ -3,23 +3,17 @@
     v-on="$listeners"
     class="cell"
     :class="{ available: available, target: target, selected: selected }"
-    @mousedown.prevent
+    @click.stop="openLetterPicker"
   >
     {{ displayedLetter.toUpperCase() }}
 
-    <v-popover
-      :open="isPopoverOpen"
-      :disabled="isPopoverDisabled"
-      @show="showPopover"
-    >
-      <template slot="popover">
-        <app-letter-picker
-          @apply="applyLetter"
-          @cancel="isPopoverOpen = false"
-          :key="rerenderLetterPickerKey"
-        ></app-letter-picker>
-      </template>
-    </v-popover>
+    <v-dialog v-model="showPicker" width="300" :disabled="isDisabledDialogModal" lazy>
+      <app-letter-picker
+        @apply="applyLetter"
+        @cancel="showPicker = false"
+        :key="rerenderPickerKey"
+      ></app-letter-picker>
+    </v-dialog>
   </td>
 </template>
 
@@ -44,8 +38,8 @@ export default {
 
   data() {
     return {
-      isPopoverOpen: false,
-      rerenderLetterPickerKey: 1,
+      showPicker: false,
+      rerenderPickerKey: 1
     }
   },
 
@@ -56,7 +50,7 @@ export default {
       return this.target ? this.targetCell.letter : this.letter
     },
 
-    isPopoverDisabled() {
+    isDisabledDialogModal() {
       return !this.available || this.targetCell.letter !== null
     },
   },
@@ -64,13 +58,16 @@ export default {
   methods: {
     ...mapMutations('balda', ['SET_TARGET_CELL']),
 
-    showPopover() {
-      this.isPopoverOpen = true
-      this.rerenderLetterPickerKey = this.rerenderLetterPickerKey + 1
+    openLetterPicker() {
+      if (!this.isDisabledDialogModal) {
+        this.showPicker = true
+        this.rerenderPickerKey = this.rerenderPickerKey + 1
+      }
     },
 
     applyLetter(letter) {
-      this.isPopoverOpen = false
+      this.showPicker = false
+
       const payload = {
         cellIndex: this.cellIndex,
         rowIndex: this.rowIndex,
@@ -109,131 +106,6 @@ export default {
   &.selected {
     background-color: goldenrod;
     color: white;
-  }
-}
-</style>
-
-<style lang="scss">
-.v-popover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.trigger {
-  width: 100%;
-  height: 100%;
-}
-
-.tooltip {
-  display: block !important;
-  z-index: 10000;
-
-  .tooltip-inner {
-    background: black;
-    color: white;
-    border-radius: 16px;
-    padding: 5px 10px 4px;
-  }
-
-  .tooltip-arrow {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    position: absolute;
-    margin: 5px;
-    border-color: black;
-    z-index: 1;
-  }
-
-  &[cellIndex-placement^='top'] {
-    margin-bottom: 5px;
-
-    .tooltip-arrow {
-      border-width: 5px 5px 0 5px;
-      border-left-color: transparent !important;
-      border-right-color: transparent !important;
-      border-bottom-color: transparent !important;
-      bottom: -5px;
-      left: calc(50% - 5px);
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-  }
-
-  &[cellIndex-placement^='bottom'] {
-    margin-top: 5px;
-
-    .tooltip-arrow {
-      border-width: 0 5px 5px 5px;
-      border-left-color: transparent !important;
-      border-right-color: transparent !important;
-      border-top-color: transparent !important;
-      top: -5px;
-      left: calc(50% - 5px);
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-  }
-
-  &[cellIndex-placement^='right'] {
-    margin-left: 5px;
-
-    .tooltip-arrow {
-      border-width: 5px 5px 5px 0;
-      border-left-color: transparent !important;
-      border-top-color: transparent !important;
-      border-bottom-color: transparent !important;
-      left: -5px;
-      top: calc(50% - 5px);
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
-
-  &[cellIndex-placement^='left'] {
-    margin-right: 5px;
-
-    .tooltip-arrow {
-      border-width: 5px 0 5px 5px;
-      border-top-color: transparent !important;
-      border-right-color: transparent !important;
-      border-bottom-color: transparent !important;
-      right: -5px;
-      top: calc(50% - 5px);
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
-
-  &.popover {
-    $color: #f9f9f9;
-
-    .popover-inner {
-      background: $color;
-      color: black;
-      /*padding: 24px;*/
-      border-radius: 5px;
-      box-shadow: 0 5px 30px rgba(black, 0.1);
-    }
-
-    .popover-arrow {
-      border-color: $color;
-    }
-  }
-
-  &[aria-hidden='true'] {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.15s, visibility 0.15s;
-  }
-
-  &[aria-hidden='false'] {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.15s;
   }
 }
 </style>

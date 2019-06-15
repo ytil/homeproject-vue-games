@@ -1,40 +1,39 @@
 <template>
-  <modal name="tictactoe-game-results" width="300" height="auto">
-    <v-card>
-      <v-card-title class="headline grey lighten-2" primary-title>
-        Игра окончена
-      </v-card-title>
+  <v-card>
+    <v-card-title class="headline grey lighten-2" primary-title>
+      Игра окончена
+    </v-card-title>
 
-      <v-card-text>
-        <template v-if="gameWinner === 'none'">
-          <v-layout mb-3 justify-center>
-            <h1 class="text-xs-center">Победила дружба</h1>
-          </v-layout>
-
+    <v-card-text>
+      <template v-if="gameWinner === 'none'">
+        <v-layout mb-3 column align-center>
+          <h1>Победила дружба</h1>
           <img src="../../assets/handshake.png" alt="Рукопожатие" />
-        </template>
+        </v-layout>
 
-        <template v-else>
-          <v-layout mb-3 justify-center>
-            <h1 class="text-xs-center">Победил игрок {{ gameWinner }}</h1>
-          </v-layout>
+      </template>
+
+      <template v-else>
+        <v-layout mb-3 column align-center>
+          <h1>Победил игрок {{ gameWinner }}</h1>
           <img src="../../assets/congrats.gif" alt="Радость победы" />
-        </template>
-      </v-card-text>
+        </v-layout>
 
-      <v-divider></v-divider>
+      </template>
+    </v-card-text>
 
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="indigo" flat @click="restart">
-          Еше разок
-        </v-btn>
-        <v-btn color="red" flat @click="cancel">
-          Отмена
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </modal>
+    <v-divider></v-divider>
+
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn color="indigo" flat @click="restart">
+        Еше разок
+      </v-btn>
+      <v-btn color="red" flat @click="cancel">
+        Отмена
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
@@ -48,10 +47,9 @@ export default {
   methods: {
     restart() {
       this.$emit('restart')
-      this.$modal.hide('tictactoe-game-results')
     },
     cancel() {
-      this.$modal.hide('tictactoe-game-results')
+      this.$emit('cancel')
     },
   },
 }
@@ -59,6 +57,6 @@ export default {
 
 <style scoped>
 img {
-  max-width: 100%;
+  max-width: 70%;
 }
 </style>

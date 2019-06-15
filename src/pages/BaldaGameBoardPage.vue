@@ -27,7 +27,7 @@
             :available="isAvailableCell(cellIndex, rowIndex)"
             :target="isTargetCell(cellIndex, rowIndex)"
             :selected="isSelectedCell(cellIndex, rowIndex)"
-            @mousedown="selectCell(cellIndex, rowIndex)"
+            @mousedown.prevent="selectCell(cellIndex, rowIndex)"
             @mouseenter="onDragSelect(cellIndex, rowIndex)"
             @touchstart="selectCell(cellIndex, rowIndex)"
           ></app-cell>
@@ -71,7 +71,12 @@
       </v-layout>
     </v-layout>
 
-    <app-modal-results @restart="restartGame"></app-modal-results>
+    <v-dialog v-model="showModalResults" width="400">
+      <app-modal-results
+        @restart="restartGame"
+        @cancel="showModalResults = false"
+      ></app-modal-results>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -98,6 +103,7 @@ export default {
     return {
       dragStart: false,
       selectedCells: [],
+      showModalResults: false,
     }
   },
 
@@ -274,16 +280,20 @@ export default {
         })
         this.selectedCells = []
       } else if (this.score.usedWords.includes(this.selectedWord)) {
+        const duplicatedWord = this.selectedWord
+        this.resetMove()
         this.$toasted.error(
-          'Это слово уже учавствовало в игре, придумайте другое',
-          { icon: 'error_outline' },
+          `Слово ${duplicatedWord.toUpperCase()} уже учавствовало в игре, придумайте другое`,
+          {
+            icon: 'error_outline',
+          },
         )
-        this.resetMove()
       } else if (this.mainLineWord === this.selectedWord) {
-        this.$toasted.error('Cлово не может совпадать со стартовым словом', {
-          icon: 'error_outline',
-        })
+        const duplicatedWord = this.selectedWord
         this.resetMove()
+        this.$toasted.error(`Слово ${duplicatedWord.toUpperCase()} не должно совпадать со стартовым словом`, {
+          icon: 'error_outline'
+        })
       } else if (dictionary[this.selectedWord] === undefined) {
         this.$toasted.show(
           `<span>В нашем словаре нет слова <b class="text-uppercase">${
@@ -333,6 +343,7 @@ export default {
     },
 
     restartGame() {
+      this.showModalResults = false
       this.clearNotifications()
       const word = this.getRandomWord()
       this.resetMove()
@@ -360,7 +371,7 @@ export default {
       if (value === true) {
         const gameWinner = this.calculateGameWinner()
         this.SET_GAME_WINNER(gameWinner)
-        this.$modal.show('balda-game-results')
+        this.showModalResults = true
       }
     },
   },

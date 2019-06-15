@@ -6,7 +6,11 @@
 1.  Балда
 2.  Крестики-нолики
 
-готовность: 80%
+готовность: 85%
 
-хостинг https://ytil.github.io/homeproject-vue-games/
+todo:
+1. code-splitting
+2. перевод на nuxt.js
+
+демо https://ytil.github.io/homeproject-vue-games/
 

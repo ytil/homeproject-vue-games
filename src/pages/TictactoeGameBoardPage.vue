@@ -15,14 +15,26 @@
       </v-layout>
 
       <v-layout justify-center wrap>
-        <v-btn v-if="gameOver" @click="restartGame" color="success">Новая игра</v-btn>
+        <v-btn v-if="gameOver" @click="restartGame" color="success">
+          Новая игра
+        </v-btn>
         <v-btn v-else @click="restartGame">Сбросить ходы</v-btn>
-        <v-btn @click="showSettings">Изменить настройки</v-btn>
+        <v-btn @click="showModalSettings = true">Изменить настройки</v-btn>
       </v-layout>
 
-      <app-modal-results @restart="restartGame"></app-modal-results>
-      <app-modal-settings @apply-settings="restartGame"></app-modal-settings>
+      <v-dialog v-model="showModalResults" width="400">
+        <app-modal-results
+          @restart="restartGame"
+          @cancel="showModalResults = false"
+        ></app-modal-results>
+      </v-dialog>
 
+      <v-dialog v-model="showModalSettings" width="400">
+        <app-modal-settings
+          @apply="restartGame"
+          @cancel="showModalSettings = false"
+        ></app-modal-settings>
+      </v-dialog>
     </v-container>
   </div>
 </template>
@@ -41,6 +53,13 @@ export default {
     'app-game-board': GameBoard,
   },
 
+  data() {
+    return {
+      showModalResults: false,
+      showModalSettings: false,
+    }
+  },
+
   computed: {
     ...mapGetters('tictactoe', ['currentPlayer', 'gameWinner', 'gameOver']),
   },
@@ -49,18 +68,16 @@ export default {
     ...mapActions('tictactoe', ['INIT_NEW_GAME']),
 
     restartGame() {
+      this.showModalResults = false
+      this.showModalSettings = false
       this.INIT_NEW_GAME()
-    },
-
-    showSettings() {
-      this.$modal.show('tictactoe-game-settings')
     },
   },
 
   watch: {
     gameOver(value) {
       if (value === true) {
-        this.$modal.show('tictactoe-game-results')
+        this.showModalResults = true
       }
     },
   },

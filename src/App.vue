@@ -6,7 +6,9 @@
           <v-list-tile to="/tictactoe" @click="drawer = false">
             <v-list-tile-title>Крестики-нолики</v-list-tile-title>
           </v-list-tile>
+
           <v-divider></v-divider>
+
           <v-list-tile to="/balda" @click="drawer = false">
             <v-list-tile-title>Балда</v-list-tile-title>
           </v-list-tile>

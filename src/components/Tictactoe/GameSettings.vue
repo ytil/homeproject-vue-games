@@ -7,7 +7,7 @@
 
       <v-flex xs9>
         <v-layout>
-          <v-flex hidden-xs-only mr-5>
+          <v-flex hidden-xs-only ml-1 mr-3>
             <el-slider v-model.number="width" :min="3" :max="5"></el-slider>
           </v-flex>
 
@@ -30,7 +30,7 @@
 
       <v-flex xs9>
         <v-layout>
-          <v-flex hidden-xs-only mr-5>
+          <v-flex hidden-xs-only ml-1 mr-3>
             <el-slider v-model.number="height" :min="3" :max="5"></el-slider>
           </v-flex>
 
@@ -53,7 +53,7 @@
 
       <v-flex xs9>
         <v-layout>
-          <v-flex hidden-xs-only mr-5>
+          <v-flex hidden-xs-only ml-1 mr-3>
             <el-slider
               v-model.number="winningLine"
               :min="3"
@@ -125,10 +125,8 @@ export default {
 }
 </script>
 
-<style scoped>
-.game-settings {
-  width: 550px;
-  max-width: 80vw;
-  margin: 0 auto;
-}
+<style>
+  .game-settings {
+    min-width: 70%;
+  }
 </style>
